@@ -87,11 +87,11 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
 function GroupBrand({ light = false }: { light?: boolean }) {
   return (
     <a href="#inicio" className={"group-brand" + (light ? " group-brand-light" : "")} aria-label="Grupo KF, ir para o início">
+      <span className="brand-vertical" aria-hidden="true">GRUPO</span>
       <svg className="brand-emblem" viewBox="0 0 80 66" role="img" aria-label="Símbolo KF">
         <text x="7" y="54" fill="currentColor" fontSize="57" fontWeight="700" letterSpacing="-11" fontFamily="Georgia, serif">KF</text>
         <path d="M4 60 Q38 24 75 27" stroke="#16B668" strokeWidth="7" fill="none" strokeLinecap="square"/>
       </svg>
-      <span className="brand-type"><small>GRUPO</small><strong>KF</strong></span>
     </a>
   );
 }
@@ -132,7 +132,7 @@ export default function App() {
             <a href="#empresas" onClick={closeMenu}>Nossas empresas</a>
             <a href="#presenca" onClick={closeMenu}>Nossa presença</a>
           </nav>
-          <a className="header-action" href="#empresas">Conheça o grupo <Arrow diagonal /></a>
+          <a className="header-action" href="#empresas">Ver empresas <Arrow diagonal /></a>
           <button className="menu-button" type="button" aria-expanded={menuOpen} aria-controls="site-navigation" onClick={() => setMenuOpen(!menuOpen)}>
             <span>{menuOpen ? "Fechar" : "Menu"}</span>
             <span className={"menu-lines" + (menuOpen ? " menu-lines-open" : "")} aria-hidden="true"><i/><i/></span>
@@ -144,33 +144,32 @@ export default function App() {
         <section className="hero" id="inicio" aria-labelledby="main-title">
           <div className="hero-inner container">
             <div className="hero-copy">
-              <div className="eyebrow eyebrow-light"><span className="eyebrow-dot" /> GRUPO EMPRESARIAL</div>
-              <h1 id="main-title">Um grupo.<br /><span>Muitas frentes.</span><br /><em>Uma visão.</em></h1>
-              <p>Do campo à aviação, dos serviços ao varejo. Conheça as empresas que fazem parte do Grupo KF.</p>
-              <a className="primary-link" href="#empresas">Conheça nossas empresas <Arrow diagonal /></a>
-              <div className="hero-footnote"><span>01 / 05</span><span>Cinco marcas. Diferentes mercados.</span></div>
+              <h1 id="main-title">Da terra<br />ao céu.<br /><em>Grupo KF.</em></h1>
+              <p>Agronegócio, aviação, serviços, caminhões e máquinas pesadas e varejo de calçados. Conheça as cinco empresas do grupo.</p>
+              <a className="primary-link" href="#empresas">Explorar empresas <Arrow diagonal /></a>
+              
             </div>
             <div className="hero-gallery" aria-label="Fotografias representativas das áreas de atuação">
               <div className="hero-photo hero-photo-main">
                 <img src={asset("photos/air.webp")} alt="Helicóptero em voo, imagem ilustrativa do setor de aviação" fetchPriority="high" />
-                <span className="photo-tag">KF AIR <span>↗</span></span>
+                <span className="photo-tag">Aviação</span>
               </div>
               <div className="hero-photo hero-photo-secondary">
                 <img src={asset("photos/agro.webp")} alt="Lavoura representando o agronegócio" />
-                <span className="photo-tag">KF AGRO</span>
+                <span className="photo-tag">Agronegócio</span>
               </div>
               <div className="hero-photo hero-photo-secondary">
                 <img src={asset("photos/maquinas.webp")} alt="Máquinas pesadas representando o setor de equipamentos" />
-                <span className="photo-tag">KF MÁQUINAS</span>
+                <span className="photo-tag">Máquinas</span>
               </div>
-              <div className="gallery-index">TERRA <span>·</span> CÉU <span>·</span> MOVIMENTO</div>
+              
             </div>
           </div>
         </section>
 
         <section className="brands" aria-label="Empresas que integram o Grupo KF">
           <div className="container">
-            <div className="brands-caption"><span className="mini-line" /> EMPRESAS DO GRUPO</div>
+            
             <div className="brands-grid">
               {companies.map((company, index) => (
                 <a className="brands-item" href="#empresas" key={company.id} onClick={() => setSelected(index)} aria-label={"Explorar " + company.name}>
@@ -185,12 +184,12 @@ export default function App() {
         <section id="grupo" className="about-section section-anchor">
           <div className="container about-layout">
             <div className="about-heading">
-              <span className="section-label"><span className="mini-line" /> QUEM SOMOS</span>
-              <h2>Diferentes negócios.<br /><em>Uma identidade.</em></h2>
+              
+              <h2>Empresas de<br /><em>setores diferentes.</em></h2>
             </div>
             <div className="about-text">
-              <p className="lead">O Grupo KF conecta cinco empresas de setores distintos sob uma mesma identidade empresarial.</p>
-              <p>Uma presença que reúne agronegócio, aviação, serviços, caminhões e máquinas pesadas e varejo de calçados. Conheça o universo de cada marca.</p>
+              <p className="lead">Agronegócio, aviação, serviços, máquinas pesadas e varejo. Cada empresa com sua própria área de atuação.</p>
+              <p>O Grupo KF reúne essas cinco frentes. Explore abaixo as marcas e as atividades que fazem parte de sua estrutura.</p>
             </div>
           </div>
         </section>
@@ -199,10 +198,10 @@ export default function App() {
           <div className="container">
             <div className="portfolio-heading">
               <div>
-                <span className="section-label"><span className="mini-line" /> NOSSO PORTFÓLIO</span>
-                <h2>Conheça nossas <em>empresas.</em></h2>
+                
+                <h2>As cinco <em>empresas.</em></h2>
               </div>
-              <p>Selecione uma marca para conhecer sua área de atuação.</p>
+              <p>Escolha uma marca para conhecer sua área de atuação.</p>
             </div>
             <div className="explorer">
               <div className="explorer-nav" role="tablist" aria-label="Empresas do Grupo KF" aria-orientation="vertical">
@@ -236,12 +235,12 @@ export default function App() {
                       }
                     }}
                   >
-                    <span className="tab-index">0{index + 1}</span>
+                    
                     <span className="tab-body"><strong>{company.name}</strong><small>{company.sector}</small></span>
                     <span className="tab-arrow"><Arrow diagonal /></span>
                   </button>
                 ))}
-                <div className="explorer-count"><span>05</span> MARCAS DO GRUPO</div>
+                
               </div>
               <div className="explorer-panel" role="tabpanel" id="company-panel" aria-labelledby={"company-tab-" + selected}>
                 <div className="explorer-photo" key={current.id}>
@@ -254,7 +253,7 @@ export default function App() {
                     <span>{current.sector}</span>
                     <p>{current.description}</p>
                   </div>
-                  <span className="panel-number">0{selected + 1} / 05</span>
+                  
                 </div>
               </div>
             </div>
@@ -264,8 +263,8 @@ export default function App() {
         <section id="presenca" className="presence-section section-anchor">
           <div className="container presence-layout">
             <div>
-              <span className="section-label"><span className="mini-line" /> NOSSOS HORIZONTES</span>
-              <h2>Conexões em<br /><em>diferentes regiões.</em></h2>
+              
+              <h2>De Alagoas<br /><em>ao Sul do Brasil.</em></h2>
               <p>Alagoas, Santa Catarina e Rio Grande do Sul aparecem entre as referências geográficas do Grupo KF.</p>
             </div>
             <div className="locations" aria-label="Localidades mencionadas pelo grupo">
@@ -281,8 +280,7 @@ export default function App() {
         <div className="container">
           <div className="footer-top">
             <div>
-              <span className="footer-overline">UM GRUPO. CINCO EMPRESAS.</span>
-              <h2>O próximo capítulo<br />começa <em>aqui.</em></h2>
+              <h2>Conheça o<br /><em>Grupo KF.</em></h2>
             </div>
             <a href="#inicio" className="footer-up" aria-label="Voltar ao início"><Arrow diagonal /></a>
           </div>
