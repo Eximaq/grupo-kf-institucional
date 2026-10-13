@@ -1,34 +1,30 @@
-# Grupo KF — direção visual
+# Grupo KF — direção visual da segunda versão
 
-## Conceito
+## Premissa
 
-Uma holding brasileira apresentada como um encontro de horizontes: a terra, o céu, o trabalho, a força e o movimento. A composição combina a clareza de Corporate Editorial Premium com a fotografia de Cinematic Industrial Luxury. Contemporary Brazilian Holding orienta o uso do verde e a linguagem direta. A proposta evita um catálogo de cartões e usa escalas diferentes para cada negócio.
+Apresentar cinco empresas sem alongar a homepage em cinco capítulos gigantes. Em vez de slogans abstratos e espaços vazios, a marca do grupo ganha uma abertura composta por uma galeria de segmentos, seguida dos cinco logotipos originais e de um painel de exploração interativo.
 
-## Sistema visual
+## Referência e critérios
 
-- Verde institucional `#103E2B`: abertura, aviação e encerramento.
-- Verde de identidade `#008C51`: estados ativos e navegação.
-- Papel `#F4F1E9`: apresentação e fundos de marca.
-- Grafite `#1D2420`: textos.
-- Branco `#FFFFFF`: respiro e painéis das logos.
-- Verde suave `#D7E1CD`: pequenas superfícies de apoio.
-- Instrument Serif: títulos grandes, com desenho editorial e peso regular.
-- Manrope: navegação, textos e informações dos negócios.
+- Sites de grupos empresariais multissetoriais, em especial Grupo Rodz, como referência de hierarquia de empresas e identidade visual unificada.
+- Forte contraste entre verde escuro, off-white e fotografias.
+- Titulação Manrope de peso médio/alto com contraste editorial da Instrument Serif.
+- Mosaico fotográfico na abertura com setores distintos representados sem atribuição falsa a operações reais.
+- Navegação por empresas em lista, com painel à direita, substituindo cinco seções extensas.
 
-## Composição
+## Decisões
 
-Cabeçalho claro e compacto. Abertura assimétrica com título amplo à esquerda e horizonte fotográfico à direita. Uma faixa com as cinco logos liga a visão institucional às empresas. Agronegócio abre a apresentação com paisagem panorâmica; aviação ocupa uma composição verde com fotografia horizontal; serviços e máquinas dialogam em colunas de proporções diferentes; varejo encerra com fotografia de produto e fundo claro. Cada empresa tem âncora própria.
+- Abertura mais compacta (cerca de 600 px de altura no desktop), fotos sempre visíveis.
+- Logotipos das cinco empresas preservados nos arquivos originais.
+- Marca mãe interpretada tipograficamente com símbolo simplificado; substituir pelo vetor oficial do Grupo KF quando recebido. O original da marca mãe não está disponível como ativo independente no repositório.
+- Seções intermediárias em média com 50–80 px de respiro.
+- Textos descritivos curtos e objetivos, sem datas, números ou informações empresariais não confirmadas.
+- Referências a Alagoas, Santa Catarina e Rio Grande do Sul sem afirmar endereços, sedes ou filiais específicas.
+- Créditos fotográficos preservados em ASSETS.md e apontamento de licença no rodapé.
 
-O motivo visual é um recorte diagonal discreto que remete ao movimento das marcas KF. Retiramos a numeração decorativa dos negócios: as empresas não são etapas de um processo. A geografia aparece como nomes de regiões, sem um mapa que sugira filiais ou atribua operações não confirmadas.
+## Verificação técnica
 
-## Imagens e marcas
-
-As cinco imagens fornecidas são preservadas integralmente, sem redesenho, recoloração ou tratamento da identidade. Todas ficam sobre fundos claros. A marca principal usa uma assinatura tipográfica, pois não foi fornecido um logotipo oficial do Grupo KF. Fotografias licenciadas representam os segmentos e não são identificadas como instalações ou equipamentos do grupo. Crédito editorial discreto explicita esse uso.
-
-## Movimento e acesso
-
-Uma única entrada da abertura; fotografias respondem à interação com movimentos mínimos. Navegação por âncoras, menu móvel acessível e foco de teclado visível. Sem rolagem sequestrada, carrossel automático ou revelações repetitivas. `prefers-reduced-motion` desativa movimento. Mobile recebe composição própria com fotos mais curtas e títulos ajustados.
-
-## Conteúdo
-
-Somente segmentos e referências geográficas informados. Sem indicadores, histórico, contatos ou serviços específicos inventados. Não há formulário sem destinatário. O fechamento retorna à apresentação das empresas.
+- React + Vite + TypeScript existentes preservados.
+- Caminhos das fontes corrigidos para a base do GitHub Pages.
+- Menu mobile, âncoras e seleção por clique/teclado no painel das empresas.
+- Sem serviços externos ou bibliotecas adicionais.
