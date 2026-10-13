@@ -1,41 +1,50 @@
-# Grupo KF
+# Grupo KF — site institucional
 
-Apresentação institucional estática das cinco empresas do Grupo KF. React, TypeScript, Vite e CSS, com navegação por âncoras, seleção dos segmentos na abertura, menu responsivo e créditos fotográficos.
+Apresentação digital do Grupo KF com cinco unidades de negócio: KF Agro, KF Air, KF Serviço, KF Caminhões e Máquinas Pesadas e VD Calçados.
 
-## Desenvolvimento
+## Estrutura
 
-Requer Node.js 22.12 ou superior.
+- React + TypeScript + Vite.
+- Design responsivo, sem backend ou serviços pagos.
+- Abertura fotográfica e seleção interativa das cinco empresas.
+- Imagens e logomarcas em `public/assets`.
+- Direção de arte descrita em `DESIGN.md` e créditos em `ASSETS.md`.
 
-```sh
+## Execução
+
+Requer Node.js compatível com o Vite configurado.
+
+```bash
 npm ci
 npm run dev
 ```
 
-Endereço local: http://127.0.0.1:5173/grupo-kf-institucional/
+Build de produção:
 
-```sh
+```bash
 npm run build
-npm run preview
 ```
-
-O build executa a checagem de TypeScript e produz `dist/`. O caminho público está configurado em `vite.config.ts` para `/grupo-kf-institucional/`.
 
 ## Publicação
 
-O workflow `.github/workflows/deploy.yml` publica no GitHub Pages após cada envio à branch `main`. Instalação reproduzível via `npm ci`, build com TypeScript e permissões de publicação restritas ao job de deploy.
+A GitHub Action `.github/workflows/deploy.yml` publica automaticamente o conteúdo da branch `main` em:
 
-## Verificação visual e funcional
+https://eximaq.github.io/grupo-kf-institucional/
 
-```sh
+A base de publicação é definida em `vite.config.ts` e as fontes usam o caminho correspondente no CSS.
+
+## Testes visuais
+
+Para rodar a verificação em Chromium, após iniciar o servidor local:
+
+```bash
 python -m pip install playwright
 python -m playwright install chromium
 python scripts/verify_site.py
 ```
 
-O script usa Chromium headless e verifica larguras de 1440, 768 e 390 pixels, carregamento de imagens e fontes, âncoras, abas, teclado, menu móvel e diálogo de créditos. Capturas e relatório ficam em `qa/`, fora do controle de versão. Para testar a publicação, use `--url https://eximaq.github.io/grupo-kf-institucional/`.
+A action `visual-qa.yml` também executa testes e gera screenshots em desktop, tablet e mobile como artefatos do workflow.
 
-## Conteúdo e identidade
+## Materiais pendentes
 
-Direção de arte: `DESIGN.md`. Fontes, fotografias, licenças e marcas: `ASSETS.md`. Os cinco logotipos fornecidos são preservados integralmente. Fotografias representam os segmentos e não retratam operações reais do grupo.
-
-Materiais para uma atualização editorial: logotipo oficial do Grupo KF, fotografias próprias, descrição validada dos serviços, dados oficiais de contato e confirmação das localidades de atuação.
+A marca principal do grupo foi representada com monograma simplificado enquanto não houver arquivo oficial independente de alta qualidade. Para uma versão definitiva, substituir pela logo oficial, revisar textos e localidades e usar fotografias próprias das empresas. As fotografias atuais são ilustrativas.

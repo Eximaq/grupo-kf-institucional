@@ -1,0 +1,45 @@
+name: Visual QA
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  visual-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - name: Install browser dependencies
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Start website
+        run: |
+          npm run dev -- --host 127.0.0.1 > /tmp/site.log 2>&1 &
+          for i in $(seq 1 35); do
+            if curl -fsS http://127.0.0.1:5173/grupo-kf-institucional/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/site.log
+          exit 1
+      - name: Verify layout and navigation
+        run: python scripts/verify_site.py
+      - name: Preserve screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: grupo-kf-screenshots
+          path: qa/
+          if-no-files-found: ignore
