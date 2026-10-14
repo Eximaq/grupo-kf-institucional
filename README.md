@@ -33,6 +33,16 @@ https://eximaq.github.io/grupo-kf-institucional/
 
 A base de publicação é definida em `vite.config.ts` e as fontes usam o caminho correspondente no CSS.
 
+## Vídeo de abertura
+
+Para montar o reel ilustrativo localmente, instale FFmpeg e rode:
+
+```bash
+bash scripts/build_reel.sh
+```
+
+O GitHub Actions gera o arquivo MP4 automaticamente antes dos testes e de cada publicação. O material é uma animação de fotografias licenciadas, não imagens reais de drone das cidades. Para usar filmagens de cidades específicas, substitua o arquivo por uma montagem de vídeos com autorização de uso.
+
 ## Testes visuais
 
 Para rodar a verificação em Chromium, após iniciar o servidor local:

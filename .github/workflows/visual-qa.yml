@@ -19,6 +19,8 @@ jobs:
           node-version: "22"
           cache: npm
       - run: npm ci
+      - name: Assemble institutional reel
+        run: bash scripts/build_reel.sh
       - name: Install browser dependencies
         run: |
           python -m pip install playwright

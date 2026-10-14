@@ -1,30 +1,11 @@
-# Grupo KF — direção visual da segunda versão
+# Grupo KF — Abertura institucional e Quem Somos
 
-## Premissa
+A home exibe uma abertura cinematográfica de imagem ampla, com overlay para legibilidade, título institucional e acesso direto à seção Quem Somos. Em dispositivos que permitem movimento, reproduz um arquivo MP4 local em loop, sem som, com comando de pausa. Em caso de falha do vídeo, usa fotografia ilustrativa.
 
-Apresentar cinco empresas sem alongar a homepage em cinco capítulos gigantes. Em vez de slogans abstratos e espaços vazios, a marca do grupo ganha uma abertura composta por uma galeria de segmentos, seguida dos cinco logotipos originais e de um painel de exploração interativo.
+A área **Quem Somos** aparece imediatamente depois das logomarcas e descreve o grupo sem inventar datas, dados operacionais, sedes ou projetos.
 
-## Referência e critérios
+## Vídeo ilustrativo de apresentação
 
-- Sites de grupos empresariais multissetoriais, em especial Grupo Rodz, como referência de hierarquia de empresas e identidade visual unificada.
-- Forte contraste entre verde escuro, off-white e fotografias.
-- Titulação Manrope de peso médio/alto com contraste editorial da Instrument Serif.
-- Mosaico fotográfico na abertura com setores distintos representados sem atribuição falsa a operações reais.
-- Navegação por empresas em lista, com painel à direita, substituindo cinco seções extensas.
+O reel de demonstração é montado, neste estágio, a partir das imagens licenciadas já presentes no repositório (créditos em ASSETS.md), com movimentos cinematográficos simples. **Não são filmagens de drone reais de Maceió, Santa Catarina ou Rio Grande do Sul**. Substituir por filmagens aéreas desses lugares somente após a obtenção de arquivos com licença válida e autorização comercial aplicável.
 
-## Decisões
-
-- Abertura mais compacta (cerca de 600 px de altura no desktop), fotos sempre visíveis.
-- Logotipos das cinco empresas preservados nos arquivos originais.
-- Marca mãe interpretada tipograficamente com símbolo simplificado; substituir pelo vetor oficial do Grupo KF quando recebido. O original da marca mãe não está disponível como ativo independente no repositório.
-- Seções intermediárias em média com 50–80 px de respiro.
-- Textos descritivos curtos e objetivos, sem datas, números ou informações empresariais não confirmadas.
-- Referências a Alagoas, Santa Catarina e Rio Grande do Sul sem afirmar endereços, sedes ou filiais específicas.
-- Créditos fotográficos preservados em ASSETS.md e apontamento de licença no rodapé.
-
-## Verificação técnica
-
-- React + Vite + TypeScript existentes preservados.
-- Caminhos das fontes corrigidos para a base do GitHub Pages.
-- Menu mobile, âncoras e seleção por clique/teclado no painel das empresas.
-- Sem serviços externos ou bibliotecas adicionais.
+O arquivo `public/assets/videos/grupo-kf-reel.mp4` é gerado pela automação de deploy. Para adicionar footage real no futuro, disponibilizar os três vídeos autorizados e substituir a etapa de produção do reel no script.

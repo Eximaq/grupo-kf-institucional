@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Company = {
   id: string;
@@ -108,6 +108,9 @@ export default function App() {
   const [selected, setSelected] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [reelReady, setReelReady] = useState(false);
+  const [reelPlaying, setReelPlaying] = useState(true);
+  const reelRef = useRef<HTMLVideoElement>(null);
   const current = companies[selected];
 
   useEffect(() => {
@@ -119,6 +122,24 @@ export default function App() {
 
   function closeMenu() {
     setMenuOpen(false);
+  }
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      reelRef.current?.pause();
+      setReelPlaying(false);
+    }
+  }, []);
+
+  function toggleReel() {
+    const video = reelRef.current;
+    if (!video) return;
+    if (video.paused) {
+      void video.play().then(() => setReelPlaying(true)).catch(() => setReelPlaying(false));
+    } else {
+      video.pause();
+      setReelPlaying(false);
+    }
   }
 
   return (
@@ -141,28 +162,39 @@ export default function App() {
       </header>
 
       <main id="conteudo">
-        <section className="hero" id="inicio" aria-labelledby="main-title">
-          <div className="hero-inner container">
-            <div className="hero-copy">
-              <h1 id="main-title">Da terra<br />ao céu.<br /><em>Grupo KF.</em></h1>
-              <p>Agronegócio, aviação, serviços, caminhões e máquinas pesadas e varejo de calçados. Conheça as cinco empresas do grupo.</p>
-              <a className="primary-link" href="#empresas">Explorar empresas <Arrow diagonal /></a>
-              
+        <section className="hero hero-reel" id="inicio" aria-labelledby="main-title">
+          <div className="reel-background" aria-hidden="true">
+            <img className="reel-poster" src={asset("photos/horizonte.webp")} alt="" fetchPriority="high" />
+            <video
+              ref={reelRef}
+              className={"reel-video" + (reelReady ? " is-ready" : "")}
+              src={asset("videos/grupo-kf-reel.mp4")}
+              muted
+              autoPlay
+              loop
+              playsInline
+              preload="metadata"
+              poster={asset("photos/horizonte.webp")}
+              onLoadedData={() => setReelReady(true)}
+              onError={() => { setReelReady(false); setReelPlaying(false); }}
+              onPause={() => setReelPlaying(false)}
+              onPlay={() => setReelPlaying(true)}
+            />
+          </div>
+          <div className="reel-shade" aria-hidden="true" />
+          <div className="container reel-content">
+            <div className="reel-intro">
+              <span className="reel-overline">GRUPO KF</span>
+              <h1 id="main-title">Negócios em<br /><em>diferentes setores.</em></h1>
+              <p>O Grupo KF reúne empresas de agronegócio, aviação, serviços, caminhões e máquinas pesadas e varejo de calçados.</p>
+              <a className="reel-link" href="#grupo">Quem somos <Arrow diagonal /></a>
             </div>
-            <div className="hero-gallery" aria-label="Fotografias representativas das áreas de atuação">
-              <div className="hero-photo hero-photo-main">
-                <img src={asset("photos/air.webp")} alt="Helicóptero em voo, imagem ilustrativa do setor de aviação" fetchPriority="high" />
-                <span className="photo-tag">Aviação</span>
+            <div className="reel-footer">
+              <span>AGRONEGÓCIO <i/> AVIAÇÃO <i/> SERVIÇOS <i/> MÁQUINAS <i/> VAREJO</span>
+              <div className="reel-controls">
+                <span>Imagens ilustrativas dos segmentos</span>
+                {reelReady && <button className="reel-toggle" type="button" onClick={toggleReel} aria-label={reelPlaying ? "Pausar vídeo de abertura" : "Reproduzir vídeo de abertura"}>{reelPlaying ? "Pausar" : "Reproduzir"} <span aria-hidden="true">{reelPlaying ? "Ⅱ" : "▶"}</span></button>}
               </div>
-              <div className="hero-photo hero-photo-secondary">
-                <img src={asset("photos/agro.webp")} alt="Lavoura representando o agronegócio" />
-                <span className="photo-tag">Agronegócio</span>
-              </div>
-              <div className="hero-photo hero-photo-secondary">
-                <img src={asset("photos/maquinas.webp")} alt="Máquinas pesadas representando o setor de equipamentos" />
-                <span className="photo-tag">Máquinas</span>
-              </div>
-              
             </div>
           </div>
         </section>
@@ -181,15 +213,18 @@ export default function App() {
           </div>
         </section>
 
-        <section id="grupo" className="about-section section-anchor">
-          <div className="container about-layout">
+        <section id="grupo" className="about-section section-anchor" aria-labelledby="about-heading">
+          <div className="container about-layout about-editorial">
             <div className="about-heading">
-              
-              <h2>Empresas de<br /><em>setores diferentes.</em></h2>
+              <p className="about-section-tag">O GRUPO</p>
+              <h2 id="about-heading">Quem <em>somos.</em></h2>
+              <span className="about-signature" aria-hidden="true">KF</span>
             </div>
             <div className="about-text">
-              <p className="lead">Agronegócio, aviação, serviços, máquinas pesadas e varejo. Cada empresa com sua própria área de atuação.</p>
-              <p>O Grupo KF reúne essas cinco frentes. Explore abaixo as marcas e as atividades que fazem parte de sua estrutura.</p>
+              <p className="lead">O Grupo KF é formado por cinco empresas que atuam em diferentes segmentos do mercado.</p>
+              <p>O agronegócio, a aviação, os serviços empresariais, o setor de caminhões e máquinas pesadas e o comércio de calçados integram essa estrutura.</p>
+              <p>Este espaço apresenta as marcas e permite conhecer, em um único endereço, as áreas de atuação que compõem o grupo.</p>
+              <a className="about-link" href="#empresas">Conheça as empresas <Arrow diagonal /></a>
             </div>
           </div>
         </section>
@@ -291,7 +326,7 @@ export default function App() {
               {companies.map((company, index) => <a href="#empresas" key={company.id} onClick={() => setSelected(index)}>{company.name}</a>)}
             </div>
           </div>
-          <div className="footer-legal"><span>© {new Date().getFullYear()} Grupo KF</span><span>Fotografias ilustrativas dos segmentos · <a href="https://unsplash.com/license" target="_blank" rel="noreferrer">Unsplash</a></span></div>
+          <div className="footer-legal"><span>© {new Date().getFullYear()} Grupo KF</span><span>Imagens ilustrativas · <a href="https://unsplash.com/license" target="_blank" rel="noreferrer">Créditos fotográficos</a></span></div>
         </div>
       </footer>
     </>
