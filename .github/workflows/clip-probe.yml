@@ -1,0 +1,28 @@
+name: Probe licensed video sources
+on:
+  push:
+    paths: [.github/workflows/clip-probe.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Resolve Pexels video source URLs
+        shell: bash
+        run: |
+          set +e
+          for id in 27668238 34328931 33404367; do
+            echo "=== ID $id ==="
+            for fps in 24 25 30 2997 2398 60; do
+              for res in 1920_1080 1280_720; do
+                url="https://videos.pexels.com/video-files/$id/$id-hd_${res}_${fps}fps.mp4"
+                status=$(curl -L -I -s --max-time 12 -o /dev/null -w "%{http_code}" "$url")
+                if [ "$status" = "200" ] || [ "$status" = "206" ]; then echo "FOUND $url"; fi
+              done
+            done
+            url="https://www.pexels.com/video/$id/download/"
+            curl -L -I -s --max-time 15 -o /dev/null -w "download endpoint: %{http_code} (%{url_effective})\n" "$url"
+          done
