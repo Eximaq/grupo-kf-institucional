@@ -22,8 +22,10 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Install video encoder
+        run: python -m pip install -q imageio-ffmpeg
       - name: Assemble institutional reel
-        run: bash scripts/build_reel.sh
+        run: FFMPEG_BIN="$(python -c 'import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())')" bash scripts/build_reel.sh
       - run: npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

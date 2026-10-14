@@ -3,12 +3,13 @@ set -euo pipefail
 SOURCE_DIR="public/assets/photos"
 OUTPUT_DIR="public/assets/videos"
 OUTPUT="$OUTPUT_DIR/grupo-kf-reel.mp4"
-if ! command -v ffmpeg >/dev/null 2>&1; then
+FFMPEG_BIN="${FFMPEG_BIN:-ffmpeg}"
+if ! command -v "$FFMPEG_BIN" >/dev/null 2>&1; then
   echo "FFmpeg is required to assemble the local institutional reel." >&2
   exit 1
 fi
 mkdir -p "$OUTPUT_DIR"
-ffmpeg -hide_banner -loglevel error -y \
+"$FFMPEG_BIN" -hide_banner -loglevel error -y \
   -loop 1 -framerate 25 -t 4.5 -i "$SOURCE_DIR/horizonte.webp" \
   -loop 1 -framerate 25 -t 4.5 -i "$SOURCE_DIR/air.webp" \
   -loop 1 -framerate 25 -t 4.5 -i "$SOURCE_DIR/agro.webp" \
