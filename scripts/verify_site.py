@@ -2,6 +2,7 @@
 import argparse
 import json
 from pathlib import Path
+from urllib.parse import urljoin
 
 from playwright.sync_api import sync_playwright
 
@@ -77,7 +78,7 @@ with sync_playwright() as playwright:
         assert stats["tabCount"] == 5, stats
         assert page.get_by_role("heading", name="Quem somos.").count() == 1
         clip_url = page.locator(".reel-video").get_attribute("src")
-        clip_response = page.request.get(clip_url, timeout=15000)
+        clip_response = page.request.get(urljoin(args.url, clip_url), timeout=15000)
         assert clip_response.status == 200, f"Video missing: {clip_url}"
         assert "video/mp4" in clip_response.headers.get("content-type", ""), clip_response.headers
         assert stats["brandLogoCount"] >= 6, stats
