@@ -10,19 +10,18 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
-      - name: Resolve Pexels video source URLs
+      - name: Resolve stock media
         shell: bash
         run: |
           set +e
+          python -m pip -q install yt-dlp
           for id in 27668238 34328931 33404367; do
-            echo "=== ID $id ==="
-            for fps in 24 25 30 2997 2398 60; do
-              for res in 1920_1080 1280_720; do
-                url="https://videos.pexels.com/video-files/$id/$id-hd_${res}_${fps}fps.mp4"
-                status=$(curl -L -I -s --max-time 12 -o /dev/null -w "%{http_code}" "$url")
-                if [ "$status" = "200" ] || [ "$status" = "206" ]; then echo "FOUND $url"; fi
-              done
+            echo "==== MEDIA $id ===="
+            for tag in "hd_1920_1080_30fps" "uhd_3840_2160_30fps" "uhd_3840_2160_25fps" "uhd_3840_2160_2997fps" "hd_1920_1080_24fps"; do
+              url="https://videos.pexels.com/video-files/$id/$id-$tag.mp4"
+              echo "test $tag $(curl -L -s -o /dev/null --max-time 8 -w '%{http_code}' -r 0-2047 "$url")"
             done
-            url="https://www.pexels.com/video/$id/download/"
-            curl -L -I -s --max-time 15 -o /dev/null -w "download endpoint: %{http_code} (%{url_effective})\n" "$url"
+            page="https://www.pexels.com/video/aerial-video-$id/"
+            curl -L -s -o /tmp/pexels_page.html --max-time 12 -w "pexels page response %{http_code} bytes %{size_download}\n" "$page"
+            yt-dlp --list-formats --no-warnings --socket-timeout 12 "https://www.pexels.com/video/$id/" 2>&1 | tail -12
           done
