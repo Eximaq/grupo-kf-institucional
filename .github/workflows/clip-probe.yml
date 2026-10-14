@@ -8,20 +8,16 @@ permissions:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 5
     steps:
-      - name: Resolve stock media
+      - name: Verify Mixkit licensed free reel URLs
         shell: bash
         run: |
-          set +e
-          python -m pip -q install yt-dlp
-          for id in 27668238 34328931 33404367; do
-            echo "==== MEDIA $id ===="
-            for tag in "hd_1920_1080_30fps" "uhd_3840_2160_30fps" "uhd_3840_2160_25fps" "uhd_3840_2160_2997fps" "hd_1920_1080_24fps"; do
-              url="https://videos.pexels.com/video-files/$id/$id-$tag.mp4"
-              echo "test $tag $(curl -L -s -o /dev/null --max-time 8 -w '%{http_code}' -r 0-2047 "$url")"
+          set -e
+          for slug in             mixkit-aerial-view-of-a-park-on-the-coast-of-a-city-50189             mixkit-aerial-view-of-a-beautiful-seashore-10332             mixkit-coast-of-a-big-city-in-a-view-from-the-heights-50188             mixkit-dynamic-drone-tour-through-a-beach-44382             mixkit-aerial-panoramic-view-of-a-sunny-coastline-50178; do
+            for size in large medium small; do
+              url="https://assets.mixkit.co/videos/preview/$slug-$size.mp4"
+              result=$(curl -s -L -o /dev/null --max-time 12 -w '%{http_code} %{size_download} %{content_type}' -r 0-1024 "$url" || true)
+              echo "$slug $size: $result"
             done
-            page="https://www.pexels.com/video/aerial-video-$id/"
-            curl -L -s -o /tmp/pexels_page.html --max-time 12 -w "pexels page response %{http_code} bytes %{size_download}\n" "$page"
-            yt-dlp --list-formats --no-warnings --socket-timeout 12 "https://www.pexels.com/video/$id/" 2>&1 | tail -12
           done
