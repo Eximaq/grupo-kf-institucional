@@ -203,7 +203,7 @@ export default function App() {
   const [reelFraction, setReelFraction] = useState(0);
   const [realLocations, setRealLocations] = useState(false);
   const [maceioAvailable, setMaceioAvailable] = useState(false);
-  const reelStops = [0, 3.9, 7.8];
+  const reelStops = [0, 4.5, 9];
   const reelTitles = realLocations ? ["Maceió · AL", "Santa Catarina", "Agro · Rio Grande do Sul"] : maceioAvailable ? ["Maceió · AL", "Aviação · ilustrativo", "Agro · ilustrativo"] : ["Apresentação", "Aviação", "Agronegócio"];
   const reelRef = useRef<HTMLVideoElement>(null);
   const current = companies[selected];
@@ -241,7 +241,7 @@ export default function App() {
     const position = reelRef.current?.currentTime ?? 0;
     const index = position >= reelStops[2] ? 2 : position >= reelStops[1] ? 1 : 0;
     const start = reelStops[index];
-    const end = index === 2 ? 12.3 : reelStops[index + 1];
+    const end = index === 2 ? 13.5 : reelStops[index + 1];
     setReelChapter(index);
     setReelFraction(Math.min(1, Math.max(0, (position - start) / (end - start))));
   }

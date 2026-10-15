@@ -88,7 +88,7 @@ with sync_playwright() as playwright:
         for number in range(3):
             page.locator(".reel-chapter").nth(number).click()
             current_time = page.locator(".reel-video").evaluate("(v) => v.currentTime")
-            assert abs(current_time - [0,3.9,7.8][number]) < 1.5, current_time
+            assert abs(current_time - [0,4.5,9][number]) < 1.5, current_time
         assert stats["brandLogoCount"] >= 6, stats
 
         tabs = page.get_by_role("tab")
