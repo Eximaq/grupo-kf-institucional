@@ -350,7 +350,7 @@ export default function App() {
     }
   }
 
-  const companyMatch = window.location.pathname.match(/\\/empresas\\/([^/]+)\\/?(?:index\\.html)?$/);
+  const companyMatch = window.location.pathname.match(new RegExp("/empresas/([^/]+)/?(?:index[.]html)?$"));
   const companyIndex = companyMatch ? companySlugs.findIndex((slug) => slug === companyMatch[1]) : -1;
   if (companyIndex >= 0) return <CompanyPage index={companyIndex} />;
   if (isContactPage) return <ContactPage />;
