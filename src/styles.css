@@ -492,3 +492,41 @@ em { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-sty
   .reel-footer-videos .reel-controls { margin-left: 0; margin-top: 2px; width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { .reel-chapter-track > span { transition: none; } }
+
+/* Refinamento institucional: escala, ritmo, presença geográfica e materialidade. */
+.hero.hero-reel { background: #072e20; }
+.reel-shade { background: linear-gradient(90deg,rgba(3,26,18,.82),rgba(3,26,18,.52) 48%,rgba(3,26,18,.1) 100%),linear-gradient(0deg,rgba(3,26,18,.76),transparent 37%); }
+.hero-reel h1 { font-size: clamp(55px,6vw,91px); max-width: 810px; }
+.reel-intro p { max-width: 515px; font-size: 15px; text-wrap: pretty; }
+.reel-overline { letter-spacing: .17em; }
+.reel-chapter-track { height: 3px; }
+.reel-chapter-title { font-size: 12px; }
+.brands-item { min-height: 125px; }
+.about-editorial .about-heading { min-height: 230px; }
+.about-editorial .about-heading h2 { text-wrap: balance; }
+.about-editorial .about-text { border-left: 0; padding-left: 0; }
+.about-editorial .about-text:before { content: ""; display: block; width: 48px; height: 3px; background: var(--accent); margin: 0 0 25px; }
+.about-editorial .about-text .lead { font-size: 20px; letter-spacing: -.02em; }
+.portfolio-heading h2 { letter-spacing: -.06em; }
+.explorer-tab { border-bottom: 1px solid #d9e3d8; }
+.explorer-photo img { transition: transform .5s ease, opacity .25s ease; }
+.explorer-photo:hover img { transform: scale(1.025); }
+.explorer-description > span { letter-spacing: .07em; }
+.presence-section { background: #eaf0e8; }
+.presence-layout { align-items: start; }
+.locations { border: 1px solid #cddacb; border-bottom: 0; background: #f6f9f4; }
+.regional-header { display: flex !important; justify-content: space-between; align-items: center; gap: 10px; padding: 15px 20px !important; background: #143e2b; color: white; border: 0 !important; }
+.regional-header span { color: #a9d5b4 !important; font-size: 10px; letter-spacing: .17em; font-weight: 800; }
+.regional-header strong { font-size: 11px; color: #e2f3e4; font-weight: 700; }
+.locations > div:not(.regional-header) { margin: 0 20px; }
+.locations > div:not(.regional-header):last-child { border-bottom: 1px solid #cddacb; }
+.home-contact-transition { background: #0a3225; }
+.contact-cover-visual img { filter: saturate(.95); }
+.contact-company:hover { background: #f0f6ed; }
+@media (max-width:680px) {
+  .hero-reel h1 { font-size: clamp(49px,10.8vw,65px); }
+  .reel-shade { background: linear-gradient(90deg,rgba(3,26,18,.84),rgba(3,26,18,.43)),linear-gradient(0deg,rgba(3,26,18,.76),transparent 50%); }
+  .about-editorial .about-text .lead { font-size: 18px; }
+  .regional-header { padding: 14px !important; }
+  .locations > div:not(.regional-header) { margin: 0 14px; }
+}

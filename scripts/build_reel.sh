@@ -9,6 +9,12 @@ if ! command -v "$FFMPEG_BIN" >/dev/null 2>&1; then
   exit 1
 fi
 mkdir -p "$OUTPUT_DIR"
+# A lighter mobile rendition is generated from the approved Full HD master.
+MASTER="$OUTPUT_DIR/grupo-kf-reel-fullhd.mp4"
+MOBILE="$OUTPUT_DIR/grupo-kf-reel-mobile.mp4"
+if [[ -s "$MASTER" && ! -s "$MOBILE" ]]; then
+  "$FFMPEG_BIN" -hide_banner -loglevel error -y -i "$MASTER" -vf "scale=960:-2,fps=25" -an -c:v libx264 -preset veryfast -crf 26 -pix_fmt yuv420p -movflags +faststart "$MOBILE"
+fi
 # Prefer the approved, preassembled video. Never overwrite it during deploy.
 if [[ -s "$OUTPUT" ]]; then
   printf '{"realFootage":true,"maceioReal":true,"duration":13.56,"sceneStarts":[0,4.5,9]}\n' > "$OUTPUT_DIR/reel-manifest.json"

@@ -204,7 +204,8 @@ export default function App() {
   const [reelFraction, setReelFraction] = useState(0);
   const [realLocations, setRealLocations] = useState(false);
   const [maceioAvailable, setMaceioAvailable] = useState(false);
-  const reelStops = [0, 4.5, 9];
+  const [videoMobile, setVideoMobile] = useState(false);
+  const reelStops = [0, 4.2, 8.35];
   const reelTitles = realLocations ? ["Maceió · AL", "Santa Catarina", "Agro · Rio Grande do Sul"] : maceioAvailable ? ["Maceió · AL", "Aviação · ilustrativo", "Agro · ilustrativo"] : ["Apresentação", "Aviação", "Agronegócio"];
   const reelRef = useRef<HTMLVideoElement>(null);
   const current = companies[selected];
@@ -223,6 +224,7 @@ export default function App() {
   }
 
   useEffect(() => {
+    setVideoMobile(window.matchMedia("(max-width: 680px)").matches);
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       reelRef.current?.pause();
       setReelPlaying(false);
@@ -242,7 +244,7 @@ export default function App() {
     const position = reelRef.current?.currentTime ?? 0;
     const index = position >= reelStops[2] ? 2 : position >= reelStops[1] ? 1 : 0;
     const start = reelStops[index];
-    const end = index === 2 ? 13.5 : reelStops[index + 1];
+    const end = index === 2 ? 12.5 : reelStops[index + 1];
     setReelChapter(index);
     setReelFraction(Math.min(1, Math.max(0, (position - start) / (end - start))));
   }
@@ -298,12 +300,12 @@ export default function App() {
             <video
               ref={reelRef}
               className={"reel-video" + (reelReady ? " is-ready" : "")}
-              src={asset("videos/grupo-kf-reel-fullhd.mp4")}
+              src={videoMobile ? asset("videos/grupo-kf-reel-mobile.mp4") : asset("videos/grupo-kf-reel-fullhd.mp4")}
               muted
               autoPlay
               loop
               playsInline
-              preload="auto"
+              preload="metadata"
               poster={asset("photos/horizonte.webp")}
               onLoadedData={() => { setReelReady(true); setReelError(false); }}
               onCanPlay={() => { setReelReady(true); }}
@@ -339,7 +341,7 @@ export default function App() {
                 ))}
               </div>
               <div className="reel-controls">
-                <span>{realLocations ? "Cenas aéreas ilustrativas das regiões" : "Vídeo ilustrativo dos segmentos"}</span>
+                <span>{realLocations ? "Imagens aéreas das regiões" : "Imagens de apresentação"}</span>
                 {!reelError && <button className="reel-toggle" type="button" onClick={toggleReel} aria-label={reelPlaying ? "Pausar vídeo de abertura" : "Reproduzir vídeo de abertura"}>{reelPlaying ? "Pausar" : "Reproduzir"} <span aria-hidden="true">{reelPlaying ? "Ⅱ" : "▶"}</span></button>}
               </div>
             </div>
@@ -368,9 +370,9 @@ export default function App() {
               <span className="about-signature" aria-hidden="true">KF</span>
             </div>
             <div className="about-text">
-              <p className="lead">O Grupo KF é formado por cinco empresas que atuam em diferentes segmentos do mercado.</p>
-              <p>O agronegócio, a aviação, os serviços empresariais, o setor de caminhões e máquinas pesadas e o comércio de calçados integram essa estrutura.</p>
-              <p>Este espaço apresenta as marcas e permite conhecer, em um único endereço, as áreas de atuação que compõem o grupo.</p>
+              <p className="lead">Cinco empresas, cada uma com sua especialidade, reunidas sob a marca Grupo KF.</p>
+              <p>Do agronegócio à aviação, dos serviços aos equipamentos pesados e ao varejo: uma apresentação conjunta de negócios com atuação em diferentes mercados.</p>
+              <p>A história, os marcos e a trajetória de cada empresa serão documentados aqui com informações e fotografias fornecidas pelo próprio grupo.</p>
               <a className="about-link" href="#empresas">Conheça as empresas <Arrow diagonal /></a>
             </div>
           </div>
@@ -427,7 +429,7 @@ export default function App() {
               <div className="explorer-panel" role="tabpanel" id="company-panel" aria-labelledby={"company-tab-" + selected}>
                 <div className="explorer-photo" key={current.id}>
                   <img src={asset("photos/" + current.photo)} alt={"Fotografia ilustrativa: " + current.label} style={{ objectPosition: current.position }} />
-                  <span className="panel-photo-caption">IMAGEM REPRESENTATIVA · {current.sector.toUpperCase()}</span>
+                  <span className="panel-photo-caption">REFERÊNCIA VISUAL DO SETOR · {current.sector.toUpperCase()}</span>
                 </div>
                 <div className="explorer-info">
                   <div className="explorer-logo"><BrandLogo company={current} /></div>
@@ -446,10 +448,10 @@ export default function App() {
           <div className="container presence-layout">
             <div>
               
-              <h2>De Alagoas<br /><em>ao Sul do Brasil.</em></h2>
-              <p>Alagoas, Santa Catarina e Rio Grande do Sul aparecem entre as referências geográficas do Grupo KF.</p>
+              <h2>Do Nordeste<br /><em>à região Sul.</em></h2>
+              <p>Maceió, Santa Catarina e Rio Grande do Sul fazem parte das referências regionais apresentadas pelo grupo. A distribuição das operações será confirmada com a empresa.</p>
             </div>
-            <div className="locations" aria-label="Localidades mencionadas pelo grupo">
+            <div className="locations" aria-label="Localidades mencionadas pelo grupo"><div className="regional-header"><span>BRASIL</span><strong>Referências regionais</strong></div>
               <div><span>01</span><strong>Maceió</strong><small>Alagoas</small></div>
               <div><span>02</span><strong>Santa Catarina</strong><small>Região Sul</small></div>
               <div><span>03</span><strong>Rio Grande do Sul</strong><small>Região Sul</small></div>
