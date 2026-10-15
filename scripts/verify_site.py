@@ -102,7 +102,20 @@ with sync_playwright() as playwright:
             page.get_by_role("navigation").get_by_role("link", name="Nossas empresas").click()
             assert toggle.get_attribute("aria-expanded") == "false"
 
-        report.append({"viewport": label, "width": width, **stats})
+        contact_url = urljoin(args.url, "contato/")
+        page.goto(contact_url, wait_until="networkidle")
+        assert page.url.rstrip("/").endswith("/contato"), page.url
+        assert page.title() == "Contato | Grupo KF", page.title()
+        assert page.get_by_role("heading", name="A empresa certa. O contato direto.").count() == 1
+        assert page.get_by_role("heading", level=3).count() == 5
+        assert page.get_by_text("Informações demonstrativas").count() == 1
+        assert page.locator(".contact-company-details dd").count() == 10
+        assert page.locator(".contact-directory-list a[href^='mailto:']").count() == 0
+        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+        page.screenshot(path=str(output / f"{label}-contact-full.png"), full_page=True)
+        page.screenshot(path=str(output / f"{label}-contact-opening.png"))
+        assert page.get_by_role("link", name="Voltar ao início").get_attribute("href") == "/grupo-kf-institucional/"
+        report.append({"viewport": label, "width": width, **stats, "contactOK": True})
         page.close()
 
     browser.close()

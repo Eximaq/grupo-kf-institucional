@@ -84,9 +84,9 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   );
 }
 
-function GroupBrand({ light = false }: { light?: boolean }) {
+function GroupBrand({ light = false, href = "#inicio" }: { light?: boolean; href?: string }) {
   return (
-    <a href="#inicio" className={"group-brand" + (light ? " group-brand-light" : "")} aria-label="Grupo KF, ir para o início">
+    <a href={href} className={"group-brand" + (light ? " group-brand-light" : "")} aria-label="Grupo KF, ir para o início">
       <span className="brand-vertical" aria-hidden="true">GRUPO</span>
       <svg className="brand-emblem" viewBox="0 0 80 66" role="img" aria-label="Símbolo KF">
         <text x="7" y="54" fill="currentColor" fontSize="57" fontWeight="700" letterSpacing="-11" fontFamily="Georgia, serif">KF</text>
@@ -104,6 +104,95 @@ function BrandLogo({ company, className = "" }: { company: Company; className?: 
   );
 }
 
+
+function ContactPage() {
+  const home = import.meta.env.BASE_URL;
+  const contacts = [
+    { email: "agro@example.com", phone: "(00) 90000-0001" },
+    { email: "air@example.com", phone: "(00) 90000-0002" },
+    { email: "servico@example.com", phone: "(00) 90000-0003" },
+    { email: "maquinas@example.com", phone: "(00) 90000-0004" },
+    { email: "calcados@example.com", phone: "(00) 90000-0005" },
+  ];
+
+  return (
+    <>
+      <a className="skip-link" href="#conteudo">Ir para conteúdo</a>
+      <header className="site-header contact-header">
+        <div className="container header-inner">
+          <GroupBrand href={home} />
+          <nav aria-label="Navegação principal" className="contact-header-nav">
+            <a href={home + "#grupo"}>O grupo</a>
+            <a href={home + "#empresas"}>Empresas</a>
+            <span aria-current="page">Contato</span>
+          </nav>
+          <a className="contact-back" href={home}>Voltar ao início <Arrow diagonal /></a>
+        </div>
+      </header>
+      <main id="conteudo" className="contact-page">
+        <section className="contact-cover" aria-labelledby="contact-title">
+          <div className="container contact-cover-layout">
+            <div className="contact-cover-copy">
+              <p className="contact-eyebrow">GRUPO KF / CONTATO</p>
+              <h1 id="contact-title">A empresa certa.<br /><em>O contato direto.</em></h1>
+              <p>Encontre o canal de cada uma das cinco empresas que integram o Grupo KF. Uma única página para consultar todos os segmentos.</p>
+              <a href="#diretorio" className="contact-scroll">Ver contatos das empresas <Arrow diagonal /></a>
+            </div>
+            <div className="contact-cover-visual" aria-hidden="true">
+              <img src={asset("photos/agro.webp")} alt="" />
+              <div className="contact-cover-caption">AGRONEGÓCIO  /  AVIAÇÃO  /  SERVIÇOS  /  MÁQUINAS  /  CALÇADOS</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="diretorio" className="contact-directory" aria-label="Diretório das empresas">
+          <div className="container contact-directory-layout">
+            <div className="contact-directory-intro">
+              <p className="contact-kicker">NOSSAS EMPRESAS</p>
+              <h2>Contatos por<br /><em>segmento.</em></h2>
+              <p>Escolha a marca que você deseja conhecer. Cada empresa terá seus próprios canais oficiais de atendimento.</p>
+              <div className="contact-demo-notice">
+                <strong>Informações demonstrativas</strong>
+                <span>Os e-mails com domínio example.com e os telefones abaixo são fictícios. Serão substituídos pelos contatos oficiais antes da entrega definitiva.</span>
+              </div>
+            </div>
+            <div className="contact-directory-list">
+              {companies.map((company, index) => (
+                <article className="contact-company" key={company.id} aria-labelledby={"contact-name-" + company.id}>
+                  <div className="contact-company-brand">
+                    <span className="contact-company-mark"><BrandLogo company={company} /></span>
+                    <div className="contact-company-name">
+                      <h3 id={"contact-name-" + company.id}>{company.name}</h3>
+                      <p>{company.sector}</p>
+                    </div>
+                  </div>
+                  <dl className="contact-company-details">
+                    <div><dt>E-mail</dt><dd>{contacts[index].email}</dd></div>
+                    <div><dt>Celular / WhatsApp</dt><dd>{contacts[index].phone}</dd></div>
+                  </dl>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+        <section className="contact-outro">
+          <div className="container contact-outro-row">
+            <div><span>GRUPO KF</span><p>Conheça as empresas que fazem parte da nossa estrutura.</p></div>
+            <a href={home + "#empresas"}>Explorar as empresas <Arrow diagonal /></a>
+          </div>
+        </section>
+      </main>
+      <footer className="contact-page-footer">
+        <div className="container contact-page-footer-inner">
+          <GroupBrand light href={home} />
+          <span>© {new Date().getFullYear()} Grupo KF · Apresentação institucional</span>
+          <a href={home}>Página inicial <Arrow diagonal /></a>
+        </div>
+      </footer>
+    </>
+  );
+}
+
 export default function App() {
   const [selected, setSelected] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -112,6 +201,8 @@ export default function App() {
   const [reelPlaying, setReelPlaying] = useState(true);
   const reelRef = useRef<HTMLVideoElement>(null);
   const current = companies[selected];
+  const isContactPage = window.location.pathname.includes("/contato/");
+  const contactHref = import.meta.env.BASE_URL + "contato/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -142,6 +233,8 @@ export default function App() {
     }
   }
 
+  if (isContactPage) return <ContactPage />;
+
   return (
     <>
       <a className="skip-link" href="#conteudo">Ir para conteúdo</a>
@@ -152,8 +245,9 @@ export default function App() {
             <a href="#grupo" onClick={closeMenu}>O grupo</a>
             <a href="#empresas" onClick={closeMenu}>Nossas empresas</a>
             <a href="#presenca" onClick={closeMenu}>Nossa presença</a>
+            <a href={contactHref} onClick={closeMenu}>Contato</a>
           </nav>
-          <a className="header-action" href="#empresas">Ver empresas <Arrow diagonal /></a>
+          <a className="header-action" href={contactHref}>Fale com o grupo <Arrow diagonal /></a>
           <button className="menu-button" type="button" aria-expanded={menuOpen} aria-controls="site-navigation" onClick={() => setMenuOpen(!menuOpen)}>
             <span>{menuOpen ? "Fechar" : "Menu"}</span>
             <span className={"menu-lines" + (menuOpen ? " menu-lines-open" : "")} aria-hidden="true"><i/><i/></span>
@@ -309,6 +403,17 @@ export default function App() {
             </div>
           </div>
         </section>
+        <section className="home-contact-transition" aria-label="Contato com as empresas">
+          <div className="container home-contact-transition-inner">
+            <div className="transition-art" aria-hidden="true"><span>KF</span><span>05 MARCAS</span></div>
+            <div className="transition-message">
+              <span>CONTATO EMPRESARIAL</span>
+              <h2>Uma estrutura.<br /><em>Canais próprios.</em></h2>
+              <p>Encontre o contato da empresa que você procura em um só lugar.</p>
+            </div>
+            <a href={contactHref} className="transition-link">Ver contatos <Arrow diagonal /></a>
+          </div>
+        </section>
       </main>
 
       <footer className="site-footer">
@@ -316,6 +421,7 @@ export default function App() {
           <div className="footer-top">
             <div>
               <h2>Conheça o<br /><em>Grupo KF.</em></h2>
+              <a className="footer-contact" href={contactHref}>Contatos das empresas <Arrow diagonal /></a>
             </div>
             <a href="#inicio" className="footer-up" aria-label="Voltar ao início"><Arrow diagonal /></a>
           </div>
@@ -324,6 +430,7 @@ export default function App() {
             <GroupBrand light />
             <div className="footer-company-list">
               {companies.map((company, index) => <a href="#empresas" key={company.id} onClick={() => setSelected(index)}>{company.name}</a>)}
+              <a href={contactHref}>Contato</a>
             </div>
           </div>
           <div className="footer-legal"><span>© {new Date().getFullYear()} Grupo KF</span><span>Imagens ilustrativas · <a href="https://unsplash.com/license" target="_blank" rel="noreferrer">Créditos fotográficos</a></span></div>

@@ -58,3 +58,8 @@ A action `visual-qa.yml` também executa testes e gera screenshots em desktop, t
 ## Materiais pendentes
 
 A marca principal do grupo foi representada com monograma simplificado enquanto não houver arquivo oficial independente de alta qualidade. Para uma versão definitiva, substituir pela logo oficial, revisar textos e localidades e usar fotografias próprias das empresas. As fotografias atuais são ilustrativas.
+
+## Página de contato
+
+A rota estática `/grupo-kf-institucional/contato/` possui um diretório de cinco empresas, com e-mails `example.com` e telefones fictícios claramente identificados. As informações demonstrativas não são links ativos e precisam ser substituídas pelos contatos reais antes de lançar o site oficial. A página possui HTML próprio e é gerada pelo build multipágina do Vite, funcionando também quando acessada diretamente.
+
