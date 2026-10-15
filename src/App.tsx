@@ -198,6 +198,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [reelReady, setReelReady] = useState(false);
+  const [reelError, setReelError] = useState(false);
   const [reelPlaying, setReelPlaying] = useState(true);
   const [reelChapter, setReelChapter] = useState(0);
   const [reelFraction, setReelFraction] = useState(0);
@@ -302,11 +303,12 @@ export default function App() {
               autoPlay
               loop
               playsInline
-              preload="metadata"
+              preload="auto"
               poster={asset("photos/horizonte.webp")}
-              onLoadedData={() => setReelReady(true)}
+              onLoadedData={() => { setReelReady(true); setReelError(false); }}
+              onCanPlay={() => { setReelReady(true); }}
               onTimeUpdate={onReelTime}
-              onError={() => { setReelReady(false); setReelPlaying(false); }}
+              onError={() => { setReelReady(false); setReelPlaying(false); setReelError(true); }}
               onPause={() => setReelPlaying(false)}
               onPlay={() => setReelPlaying(true)}
             />
@@ -338,7 +340,7 @@ export default function App() {
               </div>
               <div className="reel-controls">
                 <span>{realLocations ? "Cenas aéreas ilustrativas das regiões" : "Vídeo ilustrativo dos segmentos"}</span>
-                {reelReady && <button className="reel-toggle" type="button" onClick={toggleReel} aria-label={reelPlaying ? "Pausar vídeo de abertura" : "Reproduzir vídeo de abertura"}>{reelPlaying ? "Pausar" : "Reproduzir"} <span aria-hidden="true">{reelPlaying ? "Ⅱ" : "▶"}</span></button>}
+                {!reelError && <button className="reel-toggle" type="button" onClick={toggleReel} aria-label={reelPlaying ? "Pausar vídeo de abertura" : "Reproduzir vídeo de abertura"}>{reelPlaying ? "Pausar" : "Reproduzir"} <span aria-hidden="true">{reelPlaying ? "Ⅱ" : "▶"}</span></button>}
               </div>
             </div>
           </div>

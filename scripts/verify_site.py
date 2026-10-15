@@ -29,7 +29,7 @@ with sync_playwright() as playwright:
         page = browser.new_page(
             viewport={"width": width, "height": height},
             device_scale_factor=1,
-            reduced_motion="reduce",
+            reduced_motion="no-preference",
         )
         page.on("pageerror", lambda error: errors.append(str(error)))
         page.on(
@@ -81,6 +81,18 @@ with sync_playwright() as playwright:
         clip_response = page.request.get(urljoin(args.url, clip_url), timeout=15000)
         assert clip_response.status == 200, f"Video missing: {clip_url}"
         assert "video/mp4" in clip_response.headers.get("content-type", ""), clip_response.headers
+        video = page.locator(".reel-video")
+        video.evaluate("(v) => { v.muted = true; v.currentTime = 0; }")
+        video.evaluate("(v) => v.play()")
+        page.wait_for_timeout(1400)
+        playback = video.evaluate("""(v) => ({
+            currentTime: v.currentTime, readyState: v.readyState,
+            paused: v.paused, visible: getComputedStyle(v).display !== 'none',
+            opacity: getComputedStyle(v).opacity
+        })""")
+        assert playback["currentTime"] > 0.25 and playback["readyState"] >= 2 and not playback["paused"], playback
+        assert playback["visible"] and float(playback["opacity"]) > 0.5, playback
+        video.evaluate("(v) => v.pause()")
         assert page.locator(".reel-chapter").count() == 3
         manifest = page.request.get(urljoin(args.url, "assets/videos/reel-manifest.json"), timeout=15000)
         assert manifest.status == 200

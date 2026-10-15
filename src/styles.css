@@ -327,7 +327,7 @@ em { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-sty
   .about-editorial .about-heading h2 { font-size: 54px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .reel-video { display: none; }
+  .reel-video { transition: none; }
 }
 
 
