@@ -467,3 +467,28 @@ em { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-sty
 @media (prefers-reduced-motion: reduce) {
   .contact-company:hover { padding-left: 0; padding-right: 0; }
 }
+
+/* Cinematic reel navigation: timeline, not a templated carousel */
+.reel-footer-videos { align-items: flex-end; gap: clamp(25px,3vw,55px); }
+.reel-chapters { flex: 1; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 19px; max-width: 710px; }
+.reel-chapter { appearance: none; color: #e8f4ec; border: 0; background: transparent; cursor: pointer; text-align: left; padding: 0; min-width: 0; }
+.reel-chapter:disabled { cursor: default; }
+.reel-chapter-track { display: block; background: rgba(230,247,237,.35); height: 2px; position: relative; overflow: hidden; }
+.reel-chapter-track > span { display: block; position: absolute; left: 0; top: 0; bottom: 0; background: #b9e1b9; transition: width .14s linear; }
+.reel-chapter-title { display: flex; gap: 10px; align-items: center; margin-top: 10px; color: #d7e6db; font-size: 11px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.reel-chapter-title small { color: #8ebfa1; font-size: 10px; }
+.reel-chapter.is-current .reel-chapter-title { color: white; }
+.reel-chapter.is-current .reel-chapter-title small { color: #c0edc8; }
+.reel-footer-videos .reel-controls { flex-shrink: 0; }
+@media (max-width: 900px) {
+  .reel-footer-videos { align-items: stretch; flex-direction: column; }
+  .reel-chapters { width: 100%; max-width: none; }
+  .reel-footer-videos .reel-controls { margin-left: auto; }
+}
+@media (max-width: 680px) {
+  .reel-chapters { gap: 9px; }
+  .reel-chapter-title { font-size: 9px; gap: 5px; }
+  .reel-chapter-title small { font-size: 8px; }
+  .reel-footer-videos .reel-controls { margin-left: 0; margin-top: 2px; width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .reel-chapter-track > span { transition: none; } }

@@ -63,3 +63,7 @@ A marca principal do grupo foi representada com monograma simplificado enquanto 
 
 A rota estática `/grupo-kf-institucional/contato/` possui um diretório de cinco empresas, com e-mails `example.com` e telefones fictícios claramente identificados. As informações demonstrativas não são links ativos e precisam ser substituídas pelos contatos reais antes de lançar o site oficial. A página possui HTML próprio e é gerada pelo build multipágina do Vite, funcionando também quando acessada diretamente.
 
+
+## Drone reel por capítulos
+
+A abertura oferece navegação por três cenas, indicadores de progressão, transições suaves, reprodução em loop e pausa. Para incorporar os vídeos reais, consulte `public/assets/video-sources/README.md`. A montagem demo continua ativa enquanto faltar qualquer um dos arquivos licenciados.

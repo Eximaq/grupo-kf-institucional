@@ -81,6 +81,14 @@ with sync_playwright() as playwright:
         clip_response = page.request.get(urljoin(args.url, clip_url), timeout=15000)
         assert clip_response.status == 200, f"Video missing: {clip_url}"
         assert "video/mp4" in clip_response.headers.get("content-type", ""), clip_response.headers
+        assert page.locator(".reel-chapter").count() == 3
+        manifest = page.request.get(urljoin(args.url, "assets/videos/reel-manifest.json"), timeout=15000)
+        assert manifest.status == 200
+        assert isinstance(manifest.json()["realFootage"], bool)
+        for number in range(3):
+            page.locator(".reel-chapter").nth(number).click()
+            current_time = page.locator(".reel-video").evaluate("(v) => v.currentTime")
+            assert abs(current_time - [0,3.9,7.8][number]) < 1.5, current_time
         assert stats["brandLogoCount"] >= 6, stats
 
         tabs = page.get_by_role("tab")

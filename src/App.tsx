@@ -199,6 +199,11 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [reelReady, setReelReady] = useState(false);
   const [reelPlaying, setReelPlaying] = useState(true);
+  const [reelChapter, setReelChapter] = useState(0);
+  const [reelFraction, setReelFraction] = useState(0);
+  const [realLocations, setRealLocations] = useState(false);
+  const reelStops = [0, 3.9, 7.8];
+  const reelTitles = realLocations ? ["Maceió · AL", "Santa Catarina", "Rio Grande do Sul"] : ["Apresentação", "Aviação", "Agronegócio"];
   const reelRef = useRef<HTMLVideoElement>(null);
   const current = companies[selected];
   const isContactPage = window.location.pathname.includes("/contato/");
@@ -221,6 +226,35 @@ export default function App() {
       setReelPlaying(false);
     }
   }, []);
+
+  useEffect(() => {
+    let live = true;
+    fetch(import.meta.env.BASE_URL + "assets/videos/reel-manifest.json")
+      .then((response) => response.ok ? response.json() : Promise.reject(new Error("Missing reel manifest")))
+      .then((manifest: { realFootage?: boolean }) => { if (live) setRealLocations(manifest.realFootage === true); })
+      .catch(() => { if (live) setRealLocations(false); });
+    return () => { live = false; };
+  }, []);
+
+  function onReelTime() {
+    const position = reelRef.current?.currentTime ?? 0;
+    const index = position >= reelStops[2] ? 2 : position >= reelStops[1] ? 1 : 0;
+    const start = reelStops[index];
+    const end = index === 2 ? 12.3 : reelStops[index + 1];
+    setReelChapter(index);
+    setReelFraction(Math.min(1, Math.max(0, (position - start) / (end - start))));
+  }
+
+  function jumpToReelScene(index: number) {
+    const video = reelRef.current;
+    if (!video) return;
+    video.currentTime = reelStops[index];
+    setReelChapter(index);
+    setReelFraction(0);
+    if (video.paused) {
+      void video.play().then(() => setReelPlaying(true)).catch(() => setReelPlaying(false));
+    }
+  }
 
   function toggleReel() {
     const video = reelRef.current;
@@ -270,6 +304,7 @@ export default function App() {
               preload="metadata"
               poster={asset("photos/horizonte.webp")}
               onLoadedData={() => setReelReady(true)}
+              onTimeUpdate={onReelTime}
               onError={() => { setReelReady(false); setReelPlaying(false); }}
               onPause={() => setReelPlaying(false)}
               onPlay={() => setReelPlaying(true)}
@@ -283,10 +318,25 @@ export default function App() {
               <p>O Grupo KF reúne empresas de agronegócio, aviação, serviços, caminhões e máquinas pesadas e varejo de calçados.</p>
               <a className="reel-link" href="#grupo">Quem somos <Arrow diagonal /></a>
             </div>
-            <div className="reel-footer">
-              <span>AGRONEGÓCIO <i/> AVIAÇÃO <i/> SERVIÇOS <i/> MÁQUINAS <i/> VAREJO</span>
+            <div className="reel-footer reel-footer-videos">
+              <div className="reel-chapters" role="group" aria-label="Cenas da abertura institucional">
+                {reelTitles.map((title, index) => (
+                  <button
+                    type="button"
+                    className={"reel-chapter" + (index === reelChapter ? " is-current" : "")}
+                    key={title}
+                    onClick={() => jumpToReelScene(index)}
+                    disabled={!reelReady}
+                    aria-label={"Exibir cena " + title}
+                    aria-current={index === reelChapter ? "true" : undefined}
+                  >
+                    <span className="reel-chapter-track"><span style={{ width: (index < reelChapter ? 100 : index === reelChapter ? reelFraction * 100 : 0) + "%" }} /></span>
+                    <span className="reel-chapter-title"><small>0{index + 1}</small>{title}</span>
+                  </button>
+                ))}
+              </div>
               <div className="reel-controls">
-                <span>Imagens ilustrativas dos segmentos</span>
+                <span>{realLocations ? "Cenas aéreas ilustrativas das regiões" : "Vídeo ilustrativo dos segmentos"}</span>
                 {reelReady && <button className="reel-toggle" type="button" onClick={toggleReel} aria-label={reelPlaying ? "Pausar vídeo de abertura" : "Reproduzir vídeo de abertura"}>{reelPlaying ? "Pausar" : "Reproduzir"} <span aria-hidden="true">{reelPlaying ? "Ⅱ" : "▶"}</span></button>}
               </div>
             </div>
