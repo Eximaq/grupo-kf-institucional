@@ -202,8 +202,9 @@ export default function App() {
   const [reelChapter, setReelChapter] = useState(0);
   const [reelFraction, setReelFraction] = useState(0);
   const [realLocations, setRealLocations] = useState(false);
+  const [maceioAvailable, setMaceioAvailable] = useState(false);
   const reelStops = [0, 3.9, 7.8];
-  const reelTitles = realLocations ? ["Maceió · AL", "Santa Catarina", "Rio Grande do Sul"] : ["Apresentação", "Aviação", "Agronegócio"];
+  const reelTitles = realLocations ? ["Maceió · AL", "Santa Catarina", "Agro · Rio Grande do Sul"] : maceioAvailable ? ["Maceió · AL", "Aviação · ilustrativo", "Agro · ilustrativo"] : ["Apresentação", "Aviação", "Agronegócio"];
   const reelRef = useRef<HTMLVideoElement>(null);
   const current = companies[selected];
   const isContactPage = window.location.pathname.includes("/contato/");
@@ -231,8 +232,8 @@ export default function App() {
     let live = true;
     fetch(import.meta.env.BASE_URL + "assets/videos/reel-manifest.json")
       .then((response) => response.ok ? response.json() : Promise.reject(new Error("Missing reel manifest")))
-      .then((manifest: { realFootage?: boolean }) => { if (live) setRealLocations(manifest.realFootage === true); })
-      .catch(() => { if (live) setRealLocations(false); });
+      .then((manifest: { realFootage?: boolean; maceioReal?: boolean }) => { if (live) { setRealLocations(manifest.realFootage === true); setMaceioAvailable(manifest.maceioReal === true); } })
+      .catch(() => { if (live) { setRealLocations(false); setMaceioAvailable(false); } });
     return () => { live = false; };
   }, []);
 

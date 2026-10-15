@@ -47,7 +47,16 @@ if [[ -s "$MACEIO" && -s "$SANTA" && -s "$SUL" ]]; then
     -map '[out]' -an -c:v libx264 -preset veryfast -crf 26 -pix_fmt yuv420p \
     -movflags +faststart -t 12.3 "$OUTPUT"
 fi
-if [[ "$REAL_FOOTAGE" == "false" ]]; then
+if [[ "$REAL_FOOTAGE" == "false" && -s "$MACEIO" ]]; then
+  # Maceió drone footage followed by clearly labelled illustrative segment stills.
+  "$FFMPEG_BIN" -hide_banner -loglevel error -y \
+    -ss 1 -t 4.5 -i "$MACEIO" \
+    -loop 1 -framerate 25 -t 4.5 -i "$SOURCE_DIR/air.webp" \
+    -loop 1 -framerate 25 -t 4.5 -i "$SOURCE_DIR/agro.webp" \
+    -filter_complex "[0:v]scale=1280:720:force_original_aspect_ratio=increase,crop=1280:720,fps=25,format=yuv420p,settb=AVTB,setpts=PTS-STARTPTS[v0];[1:v]scale=1280:720:force_original_aspect_ratio=increase,crop=1280:720,zoompan=z='min(zoom+0.0008,1.12)':d=1:s=1280x720:fps=25,trim=duration=4.5,format=yuv420p,settb=AVTB,setpts=PTS-STARTPTS[v1];[2:v]scale=1280:720:force_original_aspect_ratio=increase,crop=1280:720,zoompan=z='min(zoom+0.0008,1.12)':d=1:s=1280x720:fps=25,trim=duration=4.5,format=yuv420p,settb=AVTB,setpts=PTS-STARTPTS[v2];[v0][v1]xfade=transition=fade:duration=0.6:offset=3.9[w];[w][v2]xfade=transition=fade:duration=0.6:offset=7.8[out]" \
+    -map '[out]' -an -c:v libx264 -preset veryfast -crf 27 \
+    -pix_fmt yuv420p -movflags +faststart -t 12.3 "$OUTPUT"
+elif [[ "$REAL_FOOTAGE" == "false" ]]; then
 "$FFMPEG_BIN" -hide_banner -loglevel error -y \
   -loop 1 -framerate 25 -t 4.5 -i "$SOURCE_DIR/horizonte.webp" \
   -loop 1 -framerate 25 -t 4.5 -i "$SOURCE_DIR/air.webp" \
@@ -56,5 +65,7 @@ if [[ "$REAL_FOOTAGE" == "false" ]]; then
   -map '[out]' -an -c:v libx264 -preset veryfast -crf 27 \
   -pix_fmt yuv420p -movflags +faststart -t 12.3 "$OUTPUT"
 fi
-printf '{"realFootage":%s,"duration":12.3,"sceneStarts":[0,3.9,7.8]}\n' "$REAL_FOOTAGE" > "$OUTPUT_DIR/reel-manifest.json"
+MACEIO_REAL=false
+if [[ -s "$MACEIO" ]]; then MACEIO_REAL=true; fi
+printf '{"realFootage":%s,"maceioReal":%s,"duration":12.3,"sceneStarts":[0,3.9,7.8]}\n' "$REAL_FOOTAGE" "$MACEIO_REAL" > "$OUTPUT_DIR/reel-manifest.json"
 echo "Reel assembled at $OUTPUT (licensed aerial sources present: $REAL_FOOTAGE)"
