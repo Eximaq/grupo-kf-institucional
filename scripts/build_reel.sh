@@ -2,7 +2,7 @@
 set -euo pipefail
 SOURCE_DIR="public/assets/photos"
 OUTPUT_DIR="public/assets/videos"
-OUTPUT="$OUTPUT_DIR/grupo-kf-reel-3cenas-v2.mp4"
+OUTPUT="$OUTPUT_DIR/grupo-kf-reel-fullhd.mp4"
 FFMPEG_BIN="${FFMPEG_BIN:-ffmpeg}"
 if ! command -v "$FFMPEG_BIN" >/dev/null 2>&1; then
   echo "FFmpeg is required to assemble the local institutional reel." >&2
