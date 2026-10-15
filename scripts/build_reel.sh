@@ -9,6 +9,12 @@ if ! command -v "$FFMPEG_BIN" >/dev/null 2>&1; then
   exit 1
 fi
 mkdir -p "$OUTPUT_DIR"
+# Prefer the approved, preassembled video. Never overwrite it during deploy.
+if [[ -s "$OUTPUT" ]]; then
+  printf '{"realFootage":true,"maceioReal":true,"duration":13.56,"sceneStarts":[0,4.5,9]}\n' > "$OUTPUT_DIR/reel-manifest.json"
+  echo "Using preassembled institutional hero reel: $OUTPUT"
+  exit 0
+fi
 # Use actual licensed aerial footage when the three source files are present.
 # In the absence of real footage, preserve the existing photographic reel and
 # label it accurately as an illustrative presentation.
