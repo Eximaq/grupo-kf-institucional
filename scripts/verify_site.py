@@ -130,7 +130,8 @@ with sync_playwright() as playwright:
         assert page.get_by_role("heading", name="A empresa certa. O contato direto.").count() == 1
         assert page.get_by_role("heading", level=3).count() == 5
         assert page.get_by_text("Informações demonstrativas").count() == 1
-        assert page.locator(".contact-company-details dd").count() == 10
+        assert page.locator(".contact-company-details dd").count() == 5
+        assert page.get_by_text("Celular / WhatsApp").count() == 0
         assert page.locator(".contact-directory-list a[href^='mailto:']").count() == 0
         assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
         page.screenshot(path=str(output / f"{label}-contact-full.png"), full_page=True)
