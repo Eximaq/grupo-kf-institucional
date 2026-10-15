@@ -127,7 +127,7 @@ with sync_playwright() as playwright:
         page.goto(contact_url, wait_until="networkidle")
         assert page.url.rstrip("/").endswith("/contato"), page.url
         assert page.title() == "Contato | Grupo KF", page.title()
-        assert page.get_by_role("heading", name="A empresa certa. O contato direto.").count() == 1
+        assert page.get_by_role("heading", name="Cinco marcas. Uma apresentação.").count() == 1
         assert page.get_by_role("heading", level=3).count() == 5
         assert page.get_by_text("Informações demonstrativas").count() == 1
         assert page.locator(".contact-company-details dd").count() == 5
@@ -137,7 +137,17 @@ with sync_playwright() as playwright:
         page.screenshot(path=str(output / f"{label}-contact-full.png"), full_page=True)
         page.screenshot(path=str(output / f"{label}-contact-opening.png"))
         assert page.get_by_role("link", name="Voltar ao início").get_attribute("href") == "/grupo-kf-institucional/"
-        report.append({"viewport": label, "width": width, **stats, "contactOK": True})
+        for slug in ["kf-agro", "kf-air", "kf-servico", "kf-caminhoes-maquinas", "vd-calcados"]:
+            company_page = urljoin(args.url, "empresas/" + slug + "/")
+            response = page.goto(company_page, wait_until="networkidle")
+            assert response and response.status == 200, company_page
+            assert page.locator(".company-page h1").count() == 1, company_page
+            assert page.locator(".company-intro-logo img").count() == 1, company_page
+            assert page.locator(".company-related-item").count() == 2, company_page
+            assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), company_page
+            assert page.locator(".company-hero-image img").evaluate("(img) => img.complete && img.naturalWidth > 0")
+        page.screenshot(path=str(output / f"{label}-company-page.png"), full_page=True)
+        report.append({"viewport": label, "width": width, **stats, "contactOK": True, "companiesOK": 5})
         page.close()
 
     browser.close()

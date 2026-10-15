@@ -105,6 +105,85 @@ function BrandLogo({ company, className = "" }: { company: Company; className?: 
 }
 
 
+
+const companySlugs = ["kf-agro", "kf-air", "kf-servico", "kf-caminhoes-maquinas", "vd-calcados"] as const;
+const companyUrl = (index: number) => import.meta.env.BASE_URL + "empresas/" + companySlugs[index] + "/";
+
+function CompanyPage({ index }: { index: number }) {
+  const company = companies[index];
+  const home = import.meta.env.BASE_URL;
+  const previous = (index + companies.length - 1) % companies.length;
+  const next = (index + 1) % companies.length;
+  return (
+    <>
+      <a className="skip-link" href="#conteudo">Ir para conteúdo</a>
+      <header className="site-header company-header">
+        <div className="container header-inner">
+          <GroupBrand href={home} />
+          <nav className="company-header-links" aria-label="Navegação institucional">
+            <a href={home + "#grupo"}>O grupo</a>
+            <a href={home + "#empresas"}>Empresas</a>
+            <a href={home + "contato/"}>Diretório</a>
+          </nav>
+          <a className="company-home-link" href={home + "#empresas"}>Todas as empresas <Arrow diagonal /></a>
+        </div>
+      </header>
+      <main id="conteudo" className={"company-page company-page-" + company.id}>
+        <section className="company-hero">
+          <div className="company-hero-image">
+            <img src={asset("photos/" + company.photo)} alt={"Imagem ilustrativa do setor de " + company.sector} fetchPriority="high" style={{objectPosition: company.position}} />
+          </div>
+          <div className="company-hero-shade" />
+          <div className="container company-hero-inner">
+            <nav className="company-breadcrumb" aria-label="Localização"><a href={home}>Grupo KF</a><span>/</span><a href={home + "#empresas"}>Empresas</a><span>/</span><span>{company.name}</span></nav>
+            <div className="company-hero-copy">
+              <span className="company-sector">{company.sector}</span>
+              <h1>{company.name}</h1>
+              <p>{company.description}</p>
+              <a href="#apresentacao" className="company-explore">Conheça esta empresa <Arrow diagonal /></a>
+            </div>
+            <span className="company-photo-legal">Fotografia ilustrativa do setor</span>
+          </div>
+        </section>
+        <section id="apresentacao" className="company-introduction">
+          <div className="container company-intro-grid">
+            <div className="company-intro-logo"><BrandLogo company={company} /><span>Empresa do Grupo KF</span></div>
+            <div className="company-intro-description">
+              <p className="company-superheading">ÁREA DE ATUAÇÃO</p>
+              <h2>{company.sector}.</h2>
+              <p>{company.description}</p>
+              <p>Esta página apresenta o segmento e a identidade da empresa. A história, as atividades específicas e os materiais institucionais serão acrescentados após a confirmação pelo Grupo KF.</p>
+            </div>
+          </div>
+        </section>
+        <section className="company-network">
+          <div className="container company-network-layout">
+            <div><span>ESTRUTURA EMPRESARIAL</span><h2>Parte de um grupo.<br /><em>Identidade própria.</em></h2></div>
+            <div><p>O Grupo KF reúne empresas de diferentes segmentos. Explore as demais marcas e suas áreas de atuação em um só lugar.</p><a href={home + "#empresas"}>Conhecer o grupo <Arrow diagonal /></a></div>
+          </div>
+        </section>
+        <section className="company-other">
+          <div className="container">
+            <div className="company-other-top"><span>CONTINUE EXPLORANDO</span><h2>Outras empresas.</h2></div>
+            <div className="company-related">
+              {[previous, next].map((id) => (
+                <a href={companyUrl(id)} key={companies[id].id} className="company-related-item">
+                  <div className="company-related-photo"><img src={asset("photos/" + companies[id].photo)} alt={"Imagem ilustrativa de " + companies[id].sector} loading="lazy" /></div>
+                  <div><small>{companies[id].sector}</small><strong>{companies[id].name}</strong></div>
+                  <Arrow diagonal />
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer className="contact-page-footer">
+        <div className="container contact-page-footer-inner"><GroupBrand light href={home}/><span>© {new Date().getFullYear()} Grupo KF · Apresentação institucional</span><a href={home}>Voltar ao grupo <Arrow diagonal /></a></div>
+      </footer>
+    </>
+  );
+}
+
 function ContactPage() {
   const home = import.meta.env.BASE_URL;
   const contacts = [
@@ -162,7 +241,7 @@ function ContactPage() {
                   <div className="contact-company-brand">
                     <span className="contact-company-mark"><BrandLogo company={company} /></span>
                     <div className="contact-company-name">
-                      <h3 id={"contact-name-" + company.id}>{company.name}</h3>
+                      <h3 id={"contact-name-" + company.id}><a href={companyUrl(index)}>{company.name}</a></h3>
                       <p>{company.sector}</p>
                     </div>
                   </div>
@@ -271,6 +350,9 @@ export default function App() {
     }
   }
 
+  const companyMatch = window.location.pathname.match(/\\/empresas\\/([^/]+)\\/?(?:index\\.html)?$/);
+  const companyIndex = companyMatch ? companySlugs.findIndex((slug) => slug === companyMatch[1]) : -1;
+  if (companyIndex >= 0) return <CompanyPage index={companyIndex} />;
   if (isContactPage) return <ContactPage />;
 
   return (
@@ -353,7 +435,7 @@ export default function App() {
             
             <div className="brands-grid">
               {companies.map((company, index) => (
-                <a className="brands-item" href="#empresas" key={company.id} onClick={() => setSelected(index)} aria-label={"Explorar " + company.name}>
+                <a className="brands-item" href={companyUrl(index)} key={company.id} aria-label={"Explorar " + company.name}>
                   <BrandLogo company={company} />
                   <span>{company.line}</span>
                 </a>
@@ -436,6 +518,7 @@ export default function App() {
                   <div className="explorer-description">
                     <span>{current.sector}</span>
                     <p>{current.description}</p>
+                    <a className="explorer-company-link" href={companyUrl(selected)}>Conhecer {current.name} <Arrow diagonal /></a>
                   </div>
                   
                 </div>
@@ -484,7 +567,7 @@ export default function App() {
           <div className="footer-bottom">
             <GroupBrand light />
             <div className="footer-company-list">
-              {companies.map((company, index) => <a href="#empresas" key={company.id} onClick={() => setSelected(index)}>{company.name}</a>)}
+              {companies.map((company, index) => <a href={companyUrl(index)} key={company.id}>{company.name}</a>)}
               <a href={contactHref}>Contato</a>
             </div>
           </div>
