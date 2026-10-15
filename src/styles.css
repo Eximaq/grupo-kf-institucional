@@ -530,3 +530,6 @@ em { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-sty
   .regional-header { padding: 14px !important; }
   .locations > div:not(.regional-header) { margin: 0 14px; }
 }
+
+/* Diretório institucional sem telefones ou WhatsApp. */
+.contact-company-details { grid-template-columns: minmax(0,1fr); max-width: 390px; }

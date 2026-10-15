@@ -108,11 +108,11 @@ function BrandLogo({ company, className = "" }: { company: Company; className?: 
 function ContactPage() {
   const home = import.meta.env.BASE_URL;
   const contacts = [
-    { email: "agro@example.com", phone: "(00) 90000-0001" },
-    { email: "air@example.com", phone: "(00) 90000-0002" },
-    { email: "servico@example.com", phone: "(00) 90000-0003" },
-    { email: "maquinas@example.com", phone: "(00) 90000-0004" },
-    { email: "calcados@example.com", phone: "(00) 90000-0005" },
+    { email: "agro@example.com" },
+    { email: "air@example.com" },
+    { email: "servico@example.com" },
+    { email: "maquinas@example.com" },
+    { email: "calcados@example.com" },
   ];
 
   return (
@@ -134,9 +134,9 @@ function ContactPage() {
           <div className="container contact-cover-layout">
             <div className="contact-cover-copy">
               <p className="contact-eyebrow">GRUPO KF / CONTATO</p>
-              <h1 id="contact-title">A empresa certa.<br /><em>O contato direto.</em></h1>
-              <p>Encontre o canal de cada uma das cinco empresas que integram o Grupo KF. Uma única página para consultar todos os segmentos.</p>
-              <a href="#diretorio" className="contact-scroll">Ver contatos das empresas <Arrow diagonal /></a>
+              <h1 id="contact-title">Cinco marcas.<br /><em>Uma apresentação.</em></h1>
+              <p>Conheça as cinco empresas do Grupo KF e suas áreas de atuação. Informações institucionais reunidas em um só lugar.</p>
+              <a href="#diretorio" className="contact-scroll">Conheça as empresas <Arrow diagonal /></a>
             </div>
             <div className="contact-cover-visual" aria-hidden="true">
               <img src={asset("photos/agro.webp")} alt="" />
@@ -149,11 +149,11 @@ function ContactPage() {
           <div className="container contact-directory-layout">
             <div className="contact-directory-intro">
               <p className="contact-kicker">NOSSAS EMPRESAS</p>
-              <h2>Contatos por<br /><em>segmento.</em></h2>
-              <p>Escolha a marca que você deseja conhecer. Cada empresa terá seus próprios canais oficiais de atendimento.</p>
+              <h2>Empresas e<br /><em>informações.</em></h2>
+              <p>Escolha a marca que você deseja conhecer. Os e-mails apresentados nesta demonstração ainda não são oficiais.</p>
               <div className="contact-demo-notice">
                 <strong>Informações demonstrativas</strong>
-                <span>Os e-mails com domínio example.com e os telefones abaixo são fictícios. Serão substituídos pelos contatos oficiais antes da entrega definitiva.</span>
+                <span>Os endereços de e-mail abaixo são demonstrativos e serão substituídos por informações oficiais, caso o grupo decida disponibilizá-las.</span>
               </div>
             </div>
             <div className="contact-directory-list">
@@ -168,7 +168,7 @@ function ContactPage() {
                   </div>
                   <dl className="contact-company-details">
                     <div><dt>E-mail</dt><dd>{contacts[index].email}</dd></div>
-                    <div><dt>Celular / WhatsApp</dt><dd>{contacts[index].phone}</dd></div>
+                    
                   </dl>
                 </article>
               ))}
@@ -285,7 +285,7 @@ export default function App() {
             <a href="#presenca" onClick={closeMenu}>Nossa presença</a>
             <a href={contactHref} onClick={closeMenu}>Contato</a>
           </nav>
-          <a className="header-action" href={contactHref}>Fale com o grupo <Arrow diagonal /></a>
+          <a className="header-action" href={contactHref}>Conheça o grupo <Arrow diagonal /></a>
           <button className="menu-button" type="button" aria-expanded={menuOpen} aria-controls="site-navigation" onClick={() => setMenuOpen(!menuOpen)}>
             <span>{menuOpen ? "Fechar" : "Menu"}</span>
             <span className={"menu-lines" + (menuOpen ? " menu-lines-open" : "")} aria-hidden="true"><i/><i/></span>
@@ -462,11 +462,11 @@ export default function App() {
           <div className="container home-contact-transition-inner">
             <div className="transition-art" aria-hidden="true"><span>KF</span><span>05 MARCAS</span></div>
             <div className="transition-message">
-              <span>CONTATO EMPRESARIAL</span>
-              <h2>Uma estrutura.<br /><em>Canais próprios.</em></h2>
-              <p>Encontre o contato da empresa que você procura em um só lugar.</p>
+              <span>GRUPO KF</span>
+              <h2>Conheça as<br /><em>nossas empresas.</em></h2>
+              <p>Conheça as diferentes áreas de atuação que compõem o Grupo KF.</p>
             </div>
-            <a href={contactHref} className="transition-link">Ver contatos <Arrow diagonal /></a>
+            <a href={contactHref} className="transition-link">Ver empresas <Arrow diagonal /></a>
           </div>
         </section>
       </main>
@@ -476,7 +476,7 @@ export default function App() {
           <div className="footer-top">
             <div>
               <h2>Conheça o<br /><em>Grupo KF.</em></h2>
-              <a className="footer-contact" href={contactHref}>Contatos das empresas <Arrow diagonal /></a>
+              <a className="footer-contact" href={contactHref}>Conhecer as empresas <Arrow diagonal /></a>
             </div>
             <a href="#inicio" className="footer-up" aria-label="Voltar ao início"><Arrow diagonal /></a>
           </div>
