@@ -12,7 +12,27 @@ mkdir -p "$OUTPUT_DIR"
 # Use actual licensed aerial footage when the three source files are present.
 # In the absence of real footage, preserve the existing photographic reel and
 # label it accurately as an illustrative presentation.
+# Download originals from the public video provider when source files are not yet committed.
+# The exact asset IDs match user-supplied footage; fail safely to the existing reel on blocked requests.
 MEDIA_DIR="public/assets/video-sources"
+mkdir -p "$MEDIA_DIR"
+fetch_scene() {
+  local name="$1" id="$2" variant="$3"
+  local dest="$MEDIA_DIR/$name.mp4"
+  if [[ -s "$dest" ]]; then return; fi
+  local url="https://videos.pexels.com/video-files/$id/$id-$variant.mp4"
+  echo "Checking licensed video: $id"
+  if ! curl --fail --location --retry 2 --connect-timeout 10 --max-time 120 --silent --show-error "$url" -o "$dest.partial"; then
+    rm -f "$dest.partial"
+    echo "Video $id could not be retrieved: keeping existing fallback"
+    return
+  fi
+  if [[ $(stat -c%s "$dest.partial") -lt 100000 ]]; then rm -f "$dest.partial"; return; fi
+  mv "$dest.partial" "$dest"
+}
+fetch_scene maceio 13867959 uhd_3840_2160_24fps
+fetch_scene santa-catarina 14219178 uhd_3840_2160_60fps
+fetch_scene rio-grande-do-sul 13678764 hd_1920_1080_60fps
 MACEIO="$MEDIA_DIR/maceio.mp4"
 SANTA="$MEDIA_DIR/santa-catarina.mp4"
 SUL="$MEDIA_DIR/rio-grande-do-sul.mp4"
