@@ -298,7 +298,7 @@ export default function App() {
             <video
               ref={reelRef}
               className={"reel-video" + (reelReady ? " is-ready" : "")}
-              src={asset("videos/grupo-kf-reel.mp4")}
+              src={asset("videos/grupo-kf-reel-3cenas-v2.mp4")}
               muted
               autoPlay
               loop
