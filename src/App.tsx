@@ -111,11 +111,11 @@ const companyUrl = (index: number) => import.meta.env.BASE_URL + "empresas/" + c
 
 
 const machineSlides = [
-  { title: "Motoniveladora", group: "Máquinas de terraplenagem", shot: "01" },
-  { title: "Pá-carregadeira", group: "Equipamentos de movimentação", shot: "02" },
-  { title: "Caminhão carroceria", group: "Veículos de carga", shot: "03" },
-  { title: "Caminhão basculante", group: "Transporte de materiais", shot: "04" },
-  { title: "Retroescavadeira", group: "Equipamentos multifunção", shot: "05" }
+  { title: "Motoniveladora", group: "Máquinas de terraplenagem", shot: "01", image: "01-motoniveladora.webp" },
+  { title: "Pá-carregadeira", group: "Equipamentos de movimentação", shot: "02", image: "02-pa-carregadeira.webp" },
+  { title: "Caminhão carroceria", group: "Veículos de carga", shot: "03", image: "03-caminhao-carroceria.webp" },
+  { title: "Caminhão basculante", group: "Transporte de materiais", shot: "04", image: "04-caminhao-basculante.webp" },
+  { title: "Retroescavadeira", group: "Equipamentos multifunção", shot: "05", image: "05-retroescavadeira.webp" }
 ];
 function EquipmentShowcase() {
   const [active, setActive] = useState(0);
@@ -139,7 +139,7 @@ function EquipmentShowcase() {
             </div>
           </div>
           <div className="equipment-stage-visual">
-            <img src={asset("photos/maquinas.webp")} alt={"Referência visual ilustrativa: " + slide.title} loading="lazy" />
+            <img key={slide.image} src={asset("equipment/" + slide.image)} onError={(event) => { event.currentTarget.src = asset("photos/maquinas.webp"); }} alt={"Representação conceitual de " + slide.title} loading="lazy" />
             <span>Fotografia ilustrativa · apresentação em desenvolvimento</span>
           </div>
         </div>
