@@ -614,3 +614,29 @@ em { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-sty
  .company-related-item strong{font-size:14px;}
 }
 @media(prefers-reduced-motion:reduce){.company-related-item{transition:none;}}
+
+/* Equipment editorial showcase */
+.equipment-showcase{background:#f4f6f1;padding:80px 0 85px;color:#163725}
+.equipment-heading{display:flex;justify-content:space-between;align-items:end;gap:28px;margin-bottom:34px}
+.equipment-heading>div>p{font-size:10px;letter-spacing:.2em;color:#00884e;font-weight:800;margin-bottom:12px}
+.equipment-heading h2{font-size:clamp(35px,4vw,59px);letter-spacing:-.055em;line-height:1.07}
+.equipment-heading h2 em{color:#59876a}
+.equipment-heading>p{font-size:13px;line-height:1.7;color:#607669;max-width:315px}
+.equipment-stage{display:grid;grid-template-columns:41% 59%;min-height:485px;background:white;border:1px solid #e0e8df}
+.equipment-stage-left{padding:34px clamp(28px,4vw,65px);display:flex;flex-direction:column;justify-content:space-between}
+.equipment-index{font-size:11px;font-weight:800;color:#2b6a46;display:flex;align-items:center;gap:10px}
+.equipment-index i{display:block;height:1px;width:40px;background:#9bb5a4}
+.equipment-copy>span{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#57946c}
+.equipment-copy h3{font-size:clamp(35px,3.6vw,53px);line-height:1.1;letter-spacing:-.05em;margin:18px 0 15px}
+.equipment-copy p{max-width:340px;font-size:13px;line-height:1.8;color:#758578}
+.equipment-controls{display:flex;gap:10px}
+.equipment-controls button{height:48px;width:48px;border:1px solid #b7c9bc;background:transparent;color:#244d33;font-size:23px;cursor:pointer}
+.equipment-controls button:hover,.equipment-controls button:focus-visible{background:#153b28;color:white}
+.equipment-stage-visual{position:relative;overflow:hidden;background:#f0f2ec;display:flex;align-items:center;justify-content:center}
+.equipment-stage-visual img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.equipment-stage-visual>span{position:absolute;bottom:14px;right:18px;color:white;background:rgba(0,0,0,.56);padding:6px 10px;font-size:10px}
+.equipment-pager{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-bottom:1px solid #d5e1d6}
+.equipment-pager button{border:0;border-bottom:3px solid transparent;background:transparent;text-align:left;padding:20px 9px 16px;font-size:11px;color:#718474;cursor:pointer}
+.equipment-pager button span{display:block;font-size:10px;color:#2e9561;margin-bottom:7px}
+.equipment-pager button.is-active{border-bottom-color:#198d57;color:#183a26;font-weight:800}
+@media(max-width:730px){.equipment-showcase{padding:50px 0}.equipment-heading{display:block}.equipment-heading>p{margin-top:15px}.equipment-stage{grid-template-columns:1fr}.equipment-stage-left{min-height:240px;padding:24px;gap:22px}.equipment-stage-visual{min-height:270px}.equipment-copy h3{font-size:35px;margin:9px 0}.equipment-pager{overflow-x:auto;display:flex}.equipment-pager button{min-width:116px;flex:1}}

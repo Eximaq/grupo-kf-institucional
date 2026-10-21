@@ -109,6 +109,48 @@ function BrandLogo({ company, className = "" }: { company: Company; className?: 
 const companySlugs = ["kf-agro", "kf-air", "kf-servico", "kf-caminhoes-maquinas", "vd-calcados"] as const;
 const companyUrl = (index: number) => import.meta.env.BASE_URL + "empresas/" + companySlugs[index] + "/";
 
+
+const machineSlides = [
+  { title: "Motoniveladora", group: "Máquinas de terraplenagem", shot: "01" },
+  { title: "Pá-carregadeira", group: "Equipamentos de movimentação", shot: "02" },
+  { title: "Caminhão carroceria", group: "Veículos de carga", shot: "03" },
+  { title: "Caminhão basculante", group: "Transporte de materiais", shot: "04" },
+  { title: "Retroescavadeira", group: "Equipamentos multifunção", shot: "05" }
+];
+function EquipmentShowcase() {
+  const [active, setActive] = useState(0);
+  const slide = machineSlides[active];
+  const move = (delta: number) => setActive((value) => (value + delta + machineSlides.length) % machineSlides.length);
+  return (
+    <section className="equipment-showcase" aria-labelledby="equipment-showcase-title">
+      <div className="container">
+        <div className="equipment-heading"><div><p>PORTFÓLIO VISUAL</p><h2 id="equipment-showcase-title">Equipamentos em <em>evidência.</em></h2></div><p>Apresentação ilustrativa das categorias de máquinas e caminhões vinculadas à atuação do grupo.</p></div>
+        <div className="equipment-stage" aria-roledescription="carrossel" aria-label="Apresentação de equipamentos">
+          <div className="equipment-stage-left">
+            <span className="equipment-index">{String(active + 1).padStart(2, "0")} <i/> {String(machineSlides.length).padStart(2, "0")}</span>
+            <div className="equipment-copy" aria-live="polite">
+              <span>{slide.group}</span>
+              <h3>{slide.title}</h3>
+              <p>Imagem conceitual para apresentação institucional. Os equipamentos e suas especificações devem ser validados antes de qualquer divulgação comercial.</p>
+            </div>
+            <div className="equipment-controls">
+              <button type="button" onClick={() => move(-1)} aria-label="Equipamento anterior">←</button>
+              <button type="button" onClick={() => move(1)} aria-label="Próximo equipamento">→</button>
+            </div>
+          </div>
+          <div className="equipment-stage-visual">
+            <img src={asset("photos/maquinas.webp")} alt={"Referência visual ilustrativa: " + slide.title} loading="lazy" />
+            <span>Fotografia ilustrativa · apresentação em desenvolvimento</span>
+          </div>
+        </div>
+        <div className="equipment-pager" aria-label="Selecionar equipamento">
+          {machineSlides.map((item, id) => <button key={item.shot} type="button" className={active === id ? "is-active" : ""} aria-current={active === id ? "true" : undefined} onClick={() => setActive(id)}><span>{item.shot}</span>{item.title}</button>)}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function CompanyPage({ index }: { index: number }) {
   const company = companies[index];
   const home = import.meta.env.BASE_URL;
@@ -156,6 +198,7 @@ function CompanyPage({ index }: { index: number }) {
             </div>
           </div>
         </section>
+        {company.id === "maquinas" && <EquipmentShowcase />}
         <section className="company-network">
           <div className="container company-network-layout">
             <div><span>ESTRUTURA EMPRESARIAL</span><h2>Parte de um grupo.<br /><em>Identidade própria.</em></h2></div>
