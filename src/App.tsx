@@ -182,7 +182,7 @@ function CompanyPage({ index }: { index: number }) {
               </div>
               <img
                 className="company-hero-uploaded"
-                src={asset("photos/frota-kf-capa.webp")}
+                src={asset("photos/frota-kf-capa.png")}
                 alt="Frota de caminhões e máquinas pesadas da KF em fundo branco"
                 onError={(event) => { event.currentTarget.style.display = "none"; }}
                 fetchPriority="high"
