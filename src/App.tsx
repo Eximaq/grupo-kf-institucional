@@ -174,6 +174,7 @@ function CompanyPage({ index }: { index: number }) {
         <section className="company-hero">
           <div className="company-hero-image">
             {company.id === "maquinas" ? (
+              <>
               <div className="company-hero-fleet" aria-label="Equipamentos da KF Caminhões e Máquinas Pesadas">
                 {["01-motoniveladora.webp", "02-pa-carregadeira.webp", "05-retroescavadeira.webp", "04-caminhao-basculante.webp", "03-caminhao-carroceria.webp"].map((file, i) => (
                   <img key={file} src={asset("equipment/" + file)} alt={["Motoniveladora", "Pá-carregadeira", "Retroescavadeira", "Caminhão basculante", "Caminhão carroceria"][i]} />
@@ -186,6 +187,7 @@ function CompanyPage({ index }: { index: number }) {
                 onError={(event) => { event.currentTarget.style.display = "none"; }}
                 fetchPriority="high"
               />
+              </>
             ) : (
               <img src={asset("photos/" + company.photo)} alt={"Imagem ilustrativa do setor de " + company.sector} fetchPriority="high" style={{objectPosition: company.position}} />
             )}
