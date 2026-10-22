@@ -31,7 +31,7 @@ const companies: Company[] = [
     name: "KF Air",
     line: "Aviação",
     sector: "Aviação",
-    photo: "air.webp",
+    photo: "kf-air-capa.png",
     logo: "kf-air.png",
     description: "O universo da aviação também faz parte do Grupo KF, com atuação associada ao segmento de helicópteros.",
     label: "Aviação e helicópteros",
@@ -71,6 +71,13 @@ const companies: Company[] = [
     position: "center 67%",
   },
 ];
+
+// Use the existing photograph until the replacement is uploaded to GitHub.
+function handleCompanyPhotoError(image: HTMLImageElement, company: Company) {
+  if (company.id === "air" && !image.src.endsWith("/photos/air.webp")) {
+    image.src = asset("photos/air.webp");
+  }
+}
 
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return (
@@ -189,7 +196,7 @@ function CompanyPage({ index }: { index: number }) {
               />
               </>
             ) : (
-              <img src={asset("photos/" + company.photo)} alt={"Imagem ilustrativa do setor de " + company.sector} fetchPriority="high" style={{objectPosition: company.position}} />
+              <img src={asset("photos/" + company.photo)} onError={(event) => handleCompanyPhotoError(event.currentTarget, company)} alt={"Imagem ilustrativa do setor de " + company.sector} fetchPriority="high" style={{objectPosition: company.position}} />
             )}
           </div>
           <div className="company-hero-shade" />
@@ -228,7 +235,7 @@ function CompanyPage({ index }: { index: number }) {
             <div className="company-related">
               {[previous, next].map((id) => (
                 <a href={companyUrl(id)} key={companies[id].id} className="company-related-item">
-                  <div className={"company-related-photo" + (companies[id].id === "maquinas" ? " company-related-photo-machinery" : "")}><img src={companies[id].id === "maquinas" ? asset("photos/frota-kf-capa.png") : asset("photos/" + companies[id].photo)} alt={companies[id].id === "maquinas" ? "Frota KF Caminhões e Máquinas Pesadas" : "Imagem ilustrativa de " + companies[id].sector} loading="lazy" /></div>
+                  <div className={"company-related-photo" + (companies[id].id === "maquinas" ? " company-related-photo-machinery" : "")}><img src={companies[id].id === "maquinas" ? asset("photos/frota-kf-capa.png") : asset("photos/" + companies[id].photo)} onError={(event) => handleCompanyPhotoError(event.currentTarget, companies[id])} alt={companies[id].id === "maquinas" ? "Frota KF Caminhões e Máquinas Pesadas" : "Imagem ilustrativa de " + companies[id].sector} loading="lazy" /></div>
                   <div><small>{companies[id].sector}</small><strong>{companies[id].name}</strong></div>
                   <Arrow diagonal />
                 </a>
@@ -580,7 +587,7 @@ export default function App() {
                     </div>
                   ) : (
                     <>
-                      <img src={asset("photos/" + current.photo)} alt={"Fotografia ilustrativa: " + current.label} style={{ objectPosition: current.position }} />
+                      <img src={asset("photos/" + current.photo)} onError={(event) => handleCompanyPhotoError(event.currentTarget, current)} alt={"Fotografia ilustrativa: " + current.label} style={{ objectPosition: current.position }} />
                       <span className="panel-photo-caption">REFERÊNCIA VISUAL DO SETOR · {current.sector.toUpperCase()}</span>
                     </>
                   )}
