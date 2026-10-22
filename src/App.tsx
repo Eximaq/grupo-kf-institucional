@@ -179,6 +179,13 @@ function CompanyPage({ index }: { index: number }) {
                   <img key={file} src={asset("equipment/" + file)} alt={["Motoniveladora", "Pá-carregadeira", "Retroescavadeira", "Caminhão basculante", "Caminhão carroceria"][i]} />
                 ))}
               </div>
+              <img
+                className="company-hero-uploaded"
+                src={asset("photos/frota-kf-capa.webp")}
+                alt="Frota de caminhões e máquinas pesadas da KF em fundo branco"
+                onError={(event) => { event.currentTarget.style.display = "none"; }}
+                fetchPriority="high"
+              />
             ) : (
               <img src={asset("photos/" + company.photo)} alt={"Imagem ilustrativa do setor de " + company.sector} fetchPriority="high" style={{objectPosition: company.position}} />
             )}
