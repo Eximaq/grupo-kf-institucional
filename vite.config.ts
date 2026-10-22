@@ -1,7 +1,12 @@
 import { defineConfig } from "vite";
+import { existsSync } from "node:fs";
 
 export default defineConfig({
   base: "/grupo-kf-institucional/",
+  define: {
+    __VD_DELUXE_AVAILABLE__: JSON.stringify(existsSync("public/assets/photos/kd-deluxe-capa.jpg")),
+    __VD_KIDS_AVAILABLE__: JSON.stringify(existsSync("public/assets/photos/kd-kids-descricao.jpg")),
+  },
   build: {
     target: "es2022",
     rollupOptions: {

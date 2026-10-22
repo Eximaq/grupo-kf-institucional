@@ -13,6 +13,10 @@ type Company = {
 };
 
 const asset = (file: string) => import.meta.env.BASE_URL + "assets/" + file;
+declare const __VD_DELUXE_AVAILABLE__: boolean;
+declare const __VD_KIDS_AVAILABLE__: boolean;
+const vdDeluxeCover = __VD_DELUXE_AVAILABLE__ ? "kd-deluxe-capa.jpg" : "calcados.webp";
+const vdKidsPhoto = __VD_KIDS_AVAILABLE__ ? "kd-kids-descricao.jpg" : "calcados.webp";
 
 const companies: Company[] = [
   {
@@ -64,7 +68,7 @@ const companies: Company[] = [
     name: "VD Calçados",
     line: "VD Calçados",
     sector: "Varejo de calçados",
-    photo: "kd-deluxe-capa.jpg",
+    photo: vdDeluxeCover,
     logo: "vd-calcados.png",
     description: "A frente de varejo do Grupo KF reúne a VD Deluxe e a Via Dupla Kids, com ambientes dedicados à apresentação de calçados.",
     label: "Lojas VD Deluxe e Via Dupla Kids",
@@ -230,7 +234,7 @@ function CompanyPage({ index }: { index: number }) {
                   <p>As imagens a seguir apresentam as duas lojas de calçados do grupo: VD Deluxe e Via Dupla Kids.</p>
                   <figure className="vd-kids-feature">
                     <div className="vd-kids-image">
-                      <img src={asset("photos/kd-kids-descricao.jpg")} onError={(event) => handleKidsPhotoError(event.currentTarget)} alt="Interior da loja Via Dupla Kids, com expositores de calçados infantis" loading="lazy" />
+                      <img src={asset("photos/" + vdKidsPhoto)} onError={(event) => handleKidsPhotoError(event.currentTarget)} alt="Interior da loja Via Dupla Kids, com expositores de calçados infantis" loading="lazy" />
                     </div>
                     <figcaption>
                       <span>OUTRA LOJA DO GRUPO</span>

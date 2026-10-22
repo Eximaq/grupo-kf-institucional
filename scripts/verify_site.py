@@ -41,12 +41,7 @@ with sync_playwright() as playwright:
         page.on(
             "response",
             lambda response: errors.append(f"{response.status}: {response.url}")
-            if response.status >= 400 and not (
-                response.status == 404 and any(
-                    response.url.split("?")[0].endswith("/assets/photos/" + pending)
-                    for pending in ("kd-deluxe-capa.jpg", "kd-kids-descricao.jpg")
-                )
-            )
+            if response.status >= 400
             else None,
         )
         response = page.goto(args.url, wait_until="networkidle")
@@ -100,9 +95,10 @@ with sync_playwright() as playwright:
         assert playback["visible"] and float(playback["opacity"]) > 0.5, playback
         video.evaluate("(v) => v.pause()")
         assert page.locator(".reel-chapter").count() == 3
-        assert [s.strip() for s in page.locator(".reel-chapter-title").all_inner_texts()] == [
-            "01Alagoas", "02Rio Grande do Sul", "03Santa Catarina"
+        chapter_labels = [
+            "".join(s.split())[2:] for s in page.locator(".reel-chapter-title").all_text_contents()
         ]
+        assert chapter_labels == ["Alagoas", "RioGrandedoSul", "SantaCatarina"], chapter_labels
         manifest = page.request.get(urljoin(args.url, "assets/videos/reel-manifest.json"), timeout=15000)
         assert manifest.status == 200
         assert isinstance(manifest.json()["realFootage"], bool)
