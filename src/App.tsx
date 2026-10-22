@@ -228,7 +228,7 @@ function CompanyPage({ index }: { index: number }) {
             <div className="company-related">
               {[previous, next].map((id) => (
                 <a href={companyUrl(id)} key={companies[id].id} className="company-related-item">
-                  <div className="company-related-photo"><img src={asset("photos/" + companies[id].photo)} alt={"Imagem ilustrativa de " + companies[id].sector} loading="lazy" /></div>
+                  <div className={"company-related-photo" + (companies[id].id === "maquinas" ? " company-related-photo-machinery" : "")}><img src={companies[id].id === "maquinas" ? asset("photos/frota-kf-capa.png") : asset("photos/" + companies[id].photo)} alt={companies[id].id === "maquinas" ? "Frota KF Caminhões e Máquinas Pesadas" : "Imagem ilustrativa de " + companies[id].sector} loading="lazy" /></div>
                   <div><small>{companies[id].sector}</small><strong>{companies[id].name}</strong></div>
                   <Arrow diagonal />
                 </a>

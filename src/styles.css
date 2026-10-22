@@ -690,3 +690,7 @@ em { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-sty
   .about-editorial .about-text .lead { font-size: 17px; line-height: 1.75; }
   .about-editorial .about-text > p:not(.lead) { font-size: 14px; line-height: 1.83; margin-top: 18px; }
 }
+
+/* Use the approved KF fleet artwork in the compact company navigation cards. */
+.company-related-photo-machinery { background: #fff; }
+.company-related-photo-machinery img { width: 100%; height: 100%; object-fit: contain; object-position: center; }

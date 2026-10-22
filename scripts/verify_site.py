@@ -144,6 +144,9 @@ with sync_playwright() as playwright:
             assert page.locator(".company-page h1").count() == 1, company_page
             assert page.locator(".company-intro-logo img").count() == 1, company_page
             assert page.locator(".company-related-item").count() == 2, company_page
+            machinery_card = page.locator('.company-related-item[href*="kf-caminhoes-maquinas/"]')
+            if machinery_card.count():
+                assert "frota-kf-capa.png" in machinery_card.locator("img").get_attribute("src"), company_page
             assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), company_page
             assert page.locator(".company-hero-image img").last.evaluate("(img) => img.complete && img.naturalWidth > 0")
             if slug == "kf-caminhoes-maquinas":
