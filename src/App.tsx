@@ -512,9 +512,11 @@ export default function App() {
               <span className="about-signature" aria-hidden="true">KF</span>
             </div>
             <div className="about-text">
-              <p className="lead">Cinco empresas, cada uma com sua especialidade, reunidas sob a marca Grupo KF.</p>
-              <p>Do agronegócio à aviação, dos serviços aos equipamentos pesados e ao varejo: uma apresentação conjunta de negócios com atuação em diferentes mercados.</p>
-              <p>A história, os marcos e a trajetória de cada empresa serão documentados aqui com informações e fotografias fornecidas pelo próprio grupo.</p>
+              <p className="lead">O Grupo KF é um grupo empresarial com décadas de trajetória no mercado, construído sobre os pilares do empreendedorismo, da visão estratégica e da busca contínua pela expansão e diversificação de seus negócios.</p>
+              <p>Ao longo de sua história, o Grupo consolidou uma trajetória de crescimento e evolução, ampliando sua presença em diferentes segmentos e regiões do Brasil. Essa expansão reflete o compromisso com o desenvolvimento empresarial, a identificação de novas oportunidades e a construção de uma estrutura sólida, diversificada e preparada para acompanhar as transformações do mercado.</p>
+              <p>Atualmente, o Grupo KF está presente nos estados de Alagoas, Rio Grande do Sul e Santa Catarina, mantendo uma atuação diversificada e uma visão de negócios que ultrapassa fronteiras regionais. Sua presença em diferentes mercados representa a amplitude de sua atuação e o potencial de crescimento de suas operações.</p>
+              <p>Com uma perspectiva estratégica de longo prazo, o Grupo KF segue direcionado à expansão de suas atividades, ao fortalecimento de suas operações e à consolidação de novos negócios, sempre orientado pela eficiência, pela excelência na gestão e pela geração de valor.</p>
+              <p>Mais do que expandir negócios, o Grupo KF constrói oportunidades, fortalece sua presença no mercado e projeta o futuro com solidez, estratégia e visão de longo prazo.</p>
               <a className="about-link" href="#empresas">Conheça as empresas <Arrow diagonal /></a>
             </div>
           </div>

@@ -670,3 +670,23 @@ em { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-sty
     object-position: center center;
   }
 }
+
+
+/* Texto institucional oficial — proporções editoriais para leitura longa */
+.about-editorial { grid-template-columns: minmax(230px, .68fr) minmax(0, 1.32fr); gap: clamp(40px, 6vw, 110px); }
+.about-editorial .about-heading { position: sticky; top: 105px; }
+.about-editorial .about-text { max-width: 790px; }
+.about-editorial .about-text .lead { font-size: clamp(17px, 1.48vw, 21px); line-height: 1.65; }
+.about-editorial .about-text > p:not(.lead) { font-size: 15px; line-height: 1.9; letter-spacing: -.005em; color: #465c4d; margin-top: 23px; }
+.about-editorial .about-text > p:last-of-type { color: #234c32; }
+.about-editorial .about-link { margin-top: 30px; }
+@media (max-width: 900px) {
+  .about-editorial { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .about-editorial .about-heading { position: relative; top: auto; min-height: 155px; }
+  .about-editorial .about-text { max-width: 750px; }
+}
+@media (max-width: 680px) {
+  .about-editorial .about-text { padding-left: 0; margin-top: 0; }
+  .about-editorial .about-text .lead { font-size: 17px; line-height: 1.75; }
+  .about-editorial .about-text > p:not(.lead) { font-size: 14px; line-height: 1.83; margin-top: 18px; }
+}
