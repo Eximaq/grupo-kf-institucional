@@ -147,6 +147,10 @@ with sync_playwright() as playwright:
             agro_suggestion = page.locator('.company-related-item[href*="kf-agro/"]')
             if agro_suggestion.count():
                 assert "kf-agro-capa.jpg" in agro_suggestion.locator("img").get_attribute("src")
+            if slug == "kf-air":
+                air_cover = page.locator(".company-hero-image img").last
+                assert "kf-air-capa.jpeg" in air_cover.get_attribute("src")
+                assert air_cover.evaluate("(img) => img.complete && img.naturalWidth > 0")
             if slug == "kf-agro":
                 agro_hero = page.locator(".company-hero-image img").last
                 assert "kf-agro-capa.jpg" in agro_hero.get_attribute("src")

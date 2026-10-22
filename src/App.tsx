@@ -31,7 +31,7 @@ const companies: Company[] = [
     name: "KF Air",
     line: "Aviação",
     sector: "Aviação",
-    photo: "kf-air-capa.png",
+    photo: "kf-air-capa.jpeg",
     logo: "kf-air.png",
     description: "O universo da aviação também faz parte do Grupo KF, com atuação associada ao segmento de helicópteros.",
     label: "Aviação e helicópteros",
