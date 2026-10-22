@@ -640,3 +640,8 @@ em { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-sty
 .equipment-pager button span{display:block;font-size:10px;color:#2e9561;margin-bottom:7px}
 .equipment-pager button.is-active{border-bottom-color:#198d57;color:#183a26;font-weight:800}
 @media(max-width:730px){.equipment-showcase{padding:50px 0}.equipment-heading{display:block}.equipment-heading>p{margin-top:15px}.equipment-stage{grid-template-columns:1fr}.equipment-stage-left{min-height:240px;padding:24px;gap:22px}.equipment-stage-visual{min-height:270px}.equipment-copy h3{font-size:35px;margin:9px 0}.equipment-pager{overflow-x:auto;display:flex}.equipment-pager button{min-width:116px;flex:1}}
+
+/* Portfolio KF: frota isolada sobre branco substitui fotografia de mineração */
+.equipment-cover-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));width:100%;height:100%;background:#fff;overflow:hidden;gap:0}
+.explorer-photo .equipment-cover-grid img{display:block;position:static;width:100%;height:100%;min-height:0;object-fit:contain;object-position:center;background:white;filter:none;transform:none;padding:4px}
+@media(max-width:600px){.equipment-cover-grid{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}.explorer-photo .equipment-cover-grid img{padding:2px}}

@@ -553,8 +553,18 @@ export default function App() {
               </div>
               <div className="explorer-panel" role="tabpanel" id="company-panel" aria-labelledby={"company-tab-" + selected}>
                 <div className="explorer-photo" key={current.id}>
-                  <img src={asset("photos/" + current.photo)} alt={"Fotografia ilustrativa: " + current.label} style={{ objectPosition: current.position }} />
-                  <span className="panel-photo-caption">REFERÊNCIA VISUAL DO SETOR · {current.sector.toUpperCase()}</span>
+                  {current.id === "maquinas" ? (
+                    <div className="equipment-cover-grid" aria-label="Apresentação de máquinas e caminhões do Grupo KF">
+                      {["01-motoniveladora.webp", "02-pa-carregadeira.webp", "05-retroescavadeira.webp", "04-caminhao-basculante.webp", "03-caminhao-carroceria.webp", "04-caminhao-basculante.webp"].map((file, i) => (
+                        <img key={i} src={asset("equipment/" + file)} alt={["Motoniveladora", "Pá-carregadeira", "Retroescavadeira", "Caminhão basculante", "Caminhão carroceria", "Caminhão basculante em outro destaque"][i]} loading="lazy" />
+                      ))}
+                    </div>
+                  ) : (
+                    <>
+                      <img src={asset("photos/" + current.photo)} alt={"Fotografia ilustrativa: " + current.label} style={{ objectPosition: current.position }} />
+                      <span className="panel-photo-caption">REFERÊNCIA VISUAL DO SETOR · {current.sector.toUpperCase()}</span>
+                    </>
+                  )}
                 </div>
                 <div className="explorer-info">
                   <div className="explorer-logo"><BrandLogo company={current} /></div>
