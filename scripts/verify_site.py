@@ -145,7 +145,11 @@ with sync_playwright() as playwright:
             assert page.locator(".company-intro-logo img").count() == 1, company_page
             assert page.locator(".company-related-item").count() == 2, company_page
             assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), company_page
-            assert page.locator(".company-hero-image img").evaluate("(img) => img.complete && img.naturalWidth > 0")
+            assert page.locator(".company-hero-image img").last.evaluate("(img) => img.complete && img.naturalWidth > 0")
+            if slug == "kf-caminhoes-maquinas":
+                cover = page.locator(".company-hero-uploaded")
+                assert cover.count() == 1
+                assert "frota-kf-capa.png" in cover.get_attribute("src")
         page.screenshot(path=str(output / f"{label}-company-page.png"), full_page=True)
         report.append({"viewport": label, "width": width, **stats, "contactOK": True, "companiesOK": 5})
         page.close()
