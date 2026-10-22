@@ -64,18 +64,25 @@ const companies: Company[] = [
     name: "VD Calçados",
     line: "VD Calçados",
     sector: "Varejo de calçados",
-    photo: "calcados.webp",
+    photo: "kd-deluxe-capa.jpg",
     logo: "vd-calcados.png",
-    description: "Com a marca Via Dupla, o grupo também participa do comércio de calçados, conectando-se ao varejo.",
-    label: "Varejo e estilo",
-    position: "center 67%",
+    description: "A frente de varejo do Grupo KF reúne a VD Deluxe e a Via Dupla Kids, com ambientes dedicados à apresentação de calçados.",
+    label: "Lojas VD Deluxe e Via Dupla Kids",
+    position: "center 35%",
   },
 ];
 
-// Use the existing photograph until the replacement is uploaded to GitHub.
+// Keep the published photography visible until a new client image is uploaded.
 function handleCompanyPhotoError(image: HTMLImageElement, company: Company) {
-  if (company.id === "air" && !image.src.endsWith("/photos/air.webp")) {
-    image.src = asset("photos/air.webp");
+  const fallback = company.id === "air" ? "air.webp" : company.id === "calcados" ? "calcados.webp" : null;
+  if (fallback && !image.src.endsWith("/photos/" + fallback)) {
+    image.src = asset("photos/" + fallback);
+  }
+}
+
+function handleKidsPhotoError(image: HTMLImageElement) {
+  if (!image.src.endsWith("/photos/calcados.webp")) {
+    image.src = asset("photos/calcados.webp");
   }
 }
 
@@ -218,7 +225,23 @@ function CompanyPage({ index }: { index: number }) {
               <p className="company-superheading">ÁREA DE ATUAÇÃO</p>
               <h2>{company.sector}.</h2>
               <p>{company.description}</p>
-              <p>Esta página apresenta o segmento e a identidade da empresa. A história, as atividades específicas e os materiais institucionais serão acrescentados após a confirmação pelo Grupo KF.</p>
+              {company.id === "calcados" ? (
+                <>
+                  <p>As imagens a seguir apresentam as duas lojas de calçados do grupo: VD Deluxe e Via Dupla Kids.</p>
+                  <figure className="vd-kids-feature">
+                    <div className="vd-kids-image">
+                      <img src={asset("photos/kd-kids-descricao.jpg")} onError={(event) => handleKidsPhotoError(event.currentTarget)} alt="Interior da loja Via Dupla Kids, com expositores de calçados infantis" loading="lazy" />
+                    </div>
+                    <figcaption>
+                      <span>OUTRA LOJA DO GRUPO</span>
+                      <strong>Via Dupla Kids</strong>
+                      <p>O universo infantil também integra a apresentação das lojas VD.</p>
+                    </figcaption>
+                  </figure>
+                </>
+              ) : (
+                <p>Esta página apresenta o segmento e a identidade da empresa. A história, as atividades específicas e os materiais institucionais serão acrescentados após a confirmação pelo Grupo KF.</p>
+              )}
             </div>
           </div>
         </section>
@@ -349,10 +372,9 @@ export default function App() {
   const [reelChapter, setReelChapter] = useState(0);
   const [reelFraction, setReelFraction] = useState(0);
   const [realLocations, setRealLocations] = useState(false);
-  const [maceioAvailable, setMaceioAvailable] = useState(false);
   const [videoMobile, setVideoMobile] = useState(false);
   const reelStops = [0, 4.2, 8.35];
-  const reelTitles = realLocations ? ["Maceió · AL", "Santa Catarina", "Agro · Rio Grande do Sul"] : maceioAvailable ? ["Maceió · AL", "Aviação · ilustrativo", "Agro · ilustrativo"] : ["Apresentação", "Aviação", "Agronegócio"];
+  const reelTitles = ["Alagoas", "Rio Grande do Sul", "Santa Catarina"];
   const reelRef = useRef<HTMLVideoElement>(null);
   const current = companies[selected];
   const isContactPage = window.location.pathname.includes("/contato/");
@@ -381,8 +403,8 @@ export default function App() {
     let live = true;
     fetch(import.meta.env.BASE_URL + "assets/videos/reel-manifest.json")
       .then((response) => response.ok ? response.json() : Promise.reject(new Error("Missing reel manifest")))
-      .then((manifest: { realFootage?: boolean; maceioReal?: boolean }) => { if (live) { setRealLocations(manifest.realFootage === true); setMaceioAvailable(manifest.maceioReal === true); } })
-      .catch(() => { if (live) { setRealLocations(false); setMaceioAvailable(false); } });
+      .then((manifest: { realFootage?: boolean }) => { if (live) setRealLocations(manifest.realFootage === true); })
+      .catch(() => { if (live) setRealLocations(false); });
     return () => { live = false; };
   }, []);
 

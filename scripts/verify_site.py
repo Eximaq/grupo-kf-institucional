@@ -41,7 +41,12 @@ with sync_playwright() as playwright:
         page.on(
             "response",
             lambda response: errors.append(f"{response.status}: {response.url}")
-            if response.status >= 400
+            if response.status >= 400 and not (
+                response.status == 404 and any(
+                    response.url.split("?")[0].endswith("/assets/photos/" + pending)
+                    for pending in ("kd-deluxe-capa.jpg", "kd-kids-descricao.jpg")
+                )
+            )
             else None,
         )
         response = page.goto(args.url, wait_until="networkidle")
@@ -95,6 +100,9 @@ with sync_playwright() as playwright:
         assert playback["visible"] and float(playback["opacity"]) > 0.5, playback
         video.evaluate("(v) => v.pause()")
         assert page.locator(".reel-chapter").count() == 3
+        assert [s.strip() for s in page.locator(".reel-chapter-title").all_inner_texts()] == [
+            "01Alagoas", "02Rio Grande do Sul", "03Santa Catarina"
+        ]
         manifest = page.request.get(urljoin(args.url, "assets/videos/reel-manifest.json"), timeout=15000)
         assert manifest.status == 200
         assert isinstance(manifest.json()["realFootage"], bool)
@@ -147,6 +155,10 @@ with sync_playwright() as playwright:
             agro_suggestion = page.locator('.company-related-item[href*="kf-agro/"]')
             if agro_suggestion.count():
                 assert "kf-agro-capa.jpg" in agro_suggestion.locator("img").get_attribute("src")
+            if slug == "vd-calcados":
+                assert page.locator(".vd-kids-feature").count() == 1
+                assert page.locator(".vd-kids-feature img").evaluate("(img) => img.complete && img.naturalWidth > 0")
+                assert page.locator(".company-hero-image img").last.evaluate("(img) => img.complete && img.naturalWidth > 0")
             if slug == "kf-air":
                 air_cover = page.locator(".company-hero-image img").last
                 assert "kf-air-capa.jpeg" in air_cover.get_attribute("src")
