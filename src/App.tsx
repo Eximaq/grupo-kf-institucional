@@ -140,7 +140,7 @@ function EquipmentShowcase() {
           </div>
           <div className="equipment-stage-visual">
             <img key={slide.image} src={asset("equipment/" + slide.image)} onError={(event) => { event.currentTarget.src = asset("photos/maquinas.webp"); }} alt={"Representação conceitual de " + slide.title} loading="lazy" />
-            <span>Fotografia ilustrativa · apresentação em desenvolvimento</span>
+            
           </div>
         </div>
         <div className="equipment-pager" aria-label="Selecionar equipamento">
