@@ -20,7 +20,7 @@ const companies: Company[] = [
     name: "KF Agro",
     line: "Agronegócio",
     sector: "Agronegócio",
-    photo: "agro.webp",
+    photo: "kf-agro-capa.jpg",
     logo: "kf-agro.png",
     description: "A atuação do grupo no campo, com atividades ligadas ao agronegócio e à produção rural, incluindo a soja.",
     label: "Cultivo e produção rural",
