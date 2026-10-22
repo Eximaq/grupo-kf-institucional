@@ -173,7 +173,15 @@ function CompanyPage({ index }: { index: number }) {
       <main id="conteudo" className={"company-page company-page-" + company.id}>
         <section className="company-hero">
           <div className="company-hero-image">
-            <img src={asset("photos/" + company.photo)} alt={"Imagem ilustrativa do setor de " + company.sector} fetchPriority="high" style={{objectPosition: company.position}} />
+            {company.id === "maquinas" ? (
+              <div className="company-hero-fleet" aria-label="Equipamentos da KF Caminhões e Máquinas Pesadas">
+                {["01-motoniveladora.webp", "02-pa-carregadeira.webp", "05-retroescavadeira.webp", "04-caminhao-basculante.webp", "03-caminhao-carroceria.webp"].map((file, i) => (
+                  <img key={file} src={asset("equipment/" + file)} alt={["Motoniveladora", "Pá-carregadeira", "Retroescavadeira", "Caminhão basculante", "Caminhão carroceria"][i]} />
+                ))}
+              </div>
+            ) : (
+              <img src={asset("photos/" + company.photo)} alt={"Imagem ilustrativa do setor de " + company.sector} fetchPriority="high" style={{objectPosition: company.position}} />
+            )}
           </div>
           <div className="company-hero-shade" />
           <div className="container company-hero-inner">
@@ -184,7 +192,7 @@ function CompanyPage({ index }: { index: number }) {
               <p>{company.description}</p>
               <a href="#apresentacao" className="company-explore">Conheça esta empresa <Arrow diagonal /></a>
             </div>
-            <span className="company-photo-legal">Fotografia ilustrativa do setor</span>
+            {company.id !== "maquinas" && <span className="company-photo-legal">Fotografia ilustrativa do setor</span>}
           </div>
         </section>
         <section id="apresentacao" className="company-introduction">
