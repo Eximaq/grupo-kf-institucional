@@ -13,10 +13,8 @@ type Company = {
 };
 
 const asset = (file: string) => import.meta.env.BASE_URL + "assets/" + file;
-declare const __VD_DELUXE_AVAILABLE__: boolean;
-declare const __VD_KIDS_AVAILABLE__: boolean;
-const vdDeluxeCover = __VD_DELUXE_AVAILABLE__ ? "kd-deluxe-capa.jpg" : "calcados.webp";
-const vdKidsPhoto = __VD_KIDS_AVAILABLE__ ? "kd-kids-descricao.jpg" : "calcados.webp";
+const vdDeluxeCover = "kd-deluxe-capa.jpg";
+const vdKidsPhoto = "kd-kids-descricao.jpg";
 
 const companies: Company[] = [
   {

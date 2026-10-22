@@ -153,8 +153,15 @@ with sync_playwright() as playwright:
                 assert "kf-agro-capa.jpg" in agro_suggestion.locator("img").get_attribute("src")
             if slug == "vd-calcados":
                 assert page.locator(".vd-kids-feature").count() == 1
-                assert page.locator(".vd-kids-feature img").evaluate("(img) => img.complete && img.naturalWidth > 0")
-                assert page.locator(".company-hero-image img").last.evaluate("(img) => img.complete && img.naturalWidth > 0")
+                kids_image = page.locator(".vd-kids-feature img")
+                assert "kd-kids-descricao.jpg" in kids_image.get_attribute("src"), company_page
+                assert kids_image.evaluate("(img) => img.complete && img.naturalWidth > 0"), company_page
+                vd_hero = page.locator(".company-hero-image img").last
+                assert "kd-deluxe-capa.jpg" in vd_hero.get_attribute("src"), company_page
+                assert vd_hero.evaluate("(img) => img.complete && img.naturalWidth > 0"), company_page
+            vd_card = page.locator('.company-related-item[href*="vd-calcados/"]')
+            if vd_card.count():
+                assert "kd-deluxe-capa.jpg" in vd_card.locator("img").get_attribute("src"), company_page
             if slug == "kf-air":
                 air_cover = page.locator(".company-hero-image img").last
                 assert "kf-air-capa.jpeg" in air_cover.get_attribute("src")
