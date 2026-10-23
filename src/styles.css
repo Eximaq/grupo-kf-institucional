@@ -696,17 +696,19 @@ em { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-sty
 .company-related-photo-machinery img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
 
 /* VD Calçados: a dedicated editorial treatment for the portrait store photography. */
-.company-page-calcados .company-hero { background: #113826; }
+.company-page-calcados .company-hero { background: #0b3324; }
 .company-page-calcados .company-hero-image > img {
-  width: min(52%, 780px);
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
   height: 100%;
-  left: auto;
-  right: 0;
   object-fit: cover;
-  object-position: center 29%;
+  object-position: center 54%;
+  filter: saturate(1) contrast(1.02);
 }
 .company-page-calcados .company-hero-shade {
-  background: linear-gradient(90deg, #0a3324 0%, rgba(10,51,36,.98) 34%, rgba(10,51,36,.78) 52%, rgba(10,51,36,.06) 85%);
+  background: linear-gradient(90deg, rgba(8,41,27,.93) 0%, rgba(8,41,27,.79) 30%, rgba(8,41,27,.48) 52%, rgba(8,41,27,.12) 80%, rgba(8,41,27,.04) 100%);
 }
 .company-page-calcados .company-hero-copy { max-width: 600px; }
 .vd-kids-feature {
@@ -726,30 +728,18 @@ em { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-sty
 .vd-kids-feature figcaption span { display: block; color: #348659; font-size: 10px; letter-spacing: .18em; font-weight: 800; margin-bottom: 15px; }
 .vd-kids-feature figcaption strong { display: block; color: #173e29; font-size: clamp(26px, 2.5vw, 36px); letter-spacing: -.045em; line-height: 1.1; }
 .vd-kids-feature figcaption p { margin-top: 16px; color: #617568; font-size: 13px; line-height: 1.7; }
-@media (max-width: 900px) {
-  .company-page-calcados .company-hero-image > img { width: 58%; }
-}
 @media (max-width: 680px) {
-  .company-page-calcados .company-hero-image > img { width: 76%; object-position: center 30%; }
-  .company-page-calcados .company-hero-shade {
-    background: linear-gradient(90deg, rgba(7,42,27,.93) 0%, rgba(7,42,27,.82) 40%, rgba(7,42,27,.3) 100%), linear-gradient(0deg, rgba(7,42,27,.55), transparent 60%);
-  }
   .vd-kids-feature { grid-template-columns: minmax(0,1fr); padding: 12px; gap: 18px; margin-top: 25px; }
   .vd-kids-image { height: 340px; }
   .vd-kids-feature figcaption { padding: 0 8px 12px; }
 }
 
-/* New VD Deluxe storefront: horizontal photo with an unobstructed window display. */
-.company-page-calcados .company-hero-image > img {
-  width: 74%;
-  object-position: center 54%;
-}
-.company-page-calcados .company-hero-shade {
-  background: linear-gradient(90deg, #0a3324 0%, rgba(10,51,36,.98) 24%, rgba(10,51,36,.82) 41%, rgba(10,51,36,.24) 76%, rgba(10,51,36,.02) 100%);
-}
-@media(max-width:680px) {
-  .company-page-calcados .company-hero-image > img { width: 100%; object-position: 59% center; }
+/* Mobile VD Deluxe hero: full bleed, readable typography, no side gutters. */
+@media (max-width: 680px) {
+  .company-page-calcados .company-hero-image > img {
+    object-position: 59% center;
+  }
   .company-page-calcados .company-hero-shade {
-    background: linear-gradient(90deg, rgba(7,42,27,.94), rgba(7,42,27,.74) 56%, rgba(7,42,27,.33)), linear-gradient(0deg, rgba(7,42,27,.55), transparent 60%);
+    background: linear-gradient(90deg, rgba(7,42,27,.92), rgba(7,42,27,.62) 57%, rgba(7,42,27,.27)), linear-gradient(0deg, rgba(7,42,27,.45), transparent 58%);
   }
 }

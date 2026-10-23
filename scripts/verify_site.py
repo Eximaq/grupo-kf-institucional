@@ -159,6 +159,26 @@ with sync_playwright() as playwright:
                 vd_hero = page.locator(".company-hero-image img").last
                 assert "vd-deluxe-fachada.jpeg" in vd_hero.get_attribute("src"), company_page
                 assert vd_hero.evaluate("(img) => img.complete && img.naturalWidth > 0"), company_page
+                # The full-bleed hero must fill the image plane; no dark unused strip.
+                hero_coverage = page.evaluate("""() => {
+                    const hero = document.querySelector('.company-page-calcados .company-hero-image');
+                    const img = hero?.querySelector('img');
+                    if (!hero || !img) return null;
+                    const box = hero.getBoundingClientRect();
+                    const photo = img.getBoundingClientRect();
+                    return {
+                        dx: Math.abs(photo.left - box.left),
+                        dy: Math.abs(photo.top - box.top),
+                        width: photo.width / box.width,
+                        height: photo.height / box.height,
+                        mode: getComputedStyle(img).objectFit
+                    };
+                }""")
+                assert hero_coverage, company_page
+                assert hero_coverage["dx"] < 2 and hero_coverage["dy"] < 2, hero_coverage
+                assert hero_coverage["width"] > 0.98 and hero_coverage["height"] > 0.98, hero_coverage
+                assert hero_coverage["mode"] == "cover", hero_coverage
+
             if slug == "kf-servico":
                 servico_hero = page.locator(".company-hero-image img").last
                 assert "kf-servicos-escritorio.png" in servico_hero.get_attribute("src"), company_page
