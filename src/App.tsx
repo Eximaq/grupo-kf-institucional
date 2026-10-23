@@ -13,7 +13,7 @@ type Company = {
 };
 
 const asset = (file: string) => import.meta.env.BASE_URL + "assets/" + file;
-const vdDeluxeCover = "kd-deluxe-capa.jpg";
+const vdDeluxeCover = "vd-deluxe-fachada.jpeg";
 const vdKidsPhoto = "kd-kids-descricao.jpg";
 
 const companies: Company[] = [
@@ -44,7 +44,7 @@ const companies: Company[] = [
     name: "KF Serviço",
     line: "Serviços",
     sector: "Serviços empresariais",
-    photo: "servicos.webp",
+    photo: "kf-servicos-escritorio.png",
     logo: "kf-servico.png",
     description: "Uma frente de negócios dedicada ao setor de serviços, ampliando as áreas de atuação do grupo.",
     label: "Soluções em serviços",
@@ -76,7 +76,7 @@ const companies: Company[] = [
 
 // Keep the published photography visible until a new client image is uploaded.
 function handleCompanyPhotoError(image: HTMLImageElement, company: Company) {
-  const fallback = company.id === "air" ? "air.webp" : company.id === "calcados" ? "calcados.webp" : null;
+  const fallback = company.id === "air" ? "air.webp" : company.id === "calcados" ? "kd-deluxe-capa.jpg" : company.id === "servicos" ? "servicos.webp" : null;
   if (fallback && !image.src.endsWith("/photos/" + fallback)) {
     image.src = asset("photos/" + fallback);
   }
@@ -217,7 +217,7 @@ function CompanyPage({ index }: { index: number }) {
               <p>{company.description}</p>
               <a href="#apresentacao" className="company-explore">Conheça esta empresa <Arrow diagonal /></a>
             </div>
-            {company.id !== "maquinas" && <span className="company-photo-legal">Fotografia ilustrativa do setor</span>}
+            {company.id !== "maquinas" && <span className="company-photo-legal">{company.id === "calcados" ? "Loja VD Deluxe" : company.id === "servicos" ? "Ambiente da KF Serviço" : "Fotografia ilustrativa do setor"}</span>}
           </div>
         </section>
         <section id="apresentacao" className="company-introduction">
@@ -612,7 +612,7 @@ export default function App() {
                   ) : (
                     <>
                       <img src={asset("photos/" + current.photo)} onError={(event) => handleCompanyPhotoError(event.currentTarget, current)} alt={"Fotografia ilustrativa: " + current.label} style={{ objectPosition: current.position }} />
-                      <span className="panel-photo-caption">REFERÊNCIA VISUAL DO SETOR · {current.sector.toUpperCase()}</span>
+                      <span className="panel-photo-caption">{current.id === "servicos" || current.id === "calcados" ? "AMBIENTES DO GRUPO KF" : "REFERÊNCIA VISUAL DO SETOR · " + current.sector.toUpperCase()}</span>
                     </>
                   )}
                 </div>

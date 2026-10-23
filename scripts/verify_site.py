@@ -157,11 +157,20 @@ with sync_playwright() as playwright:
                 assert "kd-kids-descricao.jpg" in kids_image.get_attribute("src"), company_page
                 assert kids_image.evaluate("(img) => img.complete && img.naturalWidth > 0"), company_page
                 vd_hero = page.locator(".company-hero-image img").last
-                assert "kd-deluxe-capa.jpg" in vd_hero.get_attribute("src"), company_page
+                assert "vd-deluxe-fachada.jpeg" in vd_hero.get_attribute("src"), company_page
                 assert vd_hero.evaluate("(img) => img.complete && img.naturalWidth > 0"), company_page
+            if slug == "kf-servico":
+                servico_hero = page.locator(".company-hero-image img").last
+                assert "kf-servicos-escritorio.png" in servico_hero.get_attribute("src"), company_page
+                assert servico_hero.evaluate("(img) => img.complete && img.naturalWidth > 0"), company_page
             vd_card = page.locator('.company-related-item[href*="vd-calcados/"]')
             if vd_card.count():
-                assert "kd-deluxe-capa.jpg" in vd_card.locator("img").get_attribute("src"), company_page
+                assert "vd-deluxe-fachada.jpeg" in vd_card.locator("img").get_attribute("src"), company_page
+                assert vd_card.locator("img").evaluate("(img) => img.complete && img.naturalWidth > 0"), company_page
+            servico_card = page.locator('.company-related-item[href*="kf-servico/"]')
+            if servico_card.count():
+                assert "kf-servicos-escritorio.png" in servico_card.locator("img").get_attribute("src"), company_page
+                assert servico_card.locator("img").evaluate("(img) => img.complete && img.naturalWidth > 0"), company_page
             if slug == "kf-air":
                 air_cover = page.locator(".company-hero-image img").last
                 assert "kf-air-capa.jpeg" in air_cover.get_attribute("src")

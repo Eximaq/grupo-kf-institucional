@@ -738,3 +738,18 @@ em { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-sty
   .vd-kids-image { height: 340px; }
   .vd-kids-feature figcaption { padding: 0 8px 12px; }
 }
+
+/* New VD Deluxe storefront: horizontal photo with an unobstructed window display. */
+.company-page-calcados .company-hero-image > img {
+  width: 74%;
+  object-position: center 54%;
+}
+.company-page-calcados .company-hero-shade {
+  background: linear-gradient(90deg, #0a3324 0%, rgba(10,51,36,.98) 24%, rgba(10,51,36,.82) 41%, rgba(10,51,36,.24) 76%, rgba(10,51,36,.02) 100%);
+}
+@media(max-width:680px) {
+  .company-page-calcados .company-hero-image > img { width: 100%; object-position: 59% center; }
+  .company-page-calcados .company-hero-shade {
+    background: linear-gradient(90deg, rgba(7,42,27,.94), rgba(7,42,27,.74) 56%, rgba(7,42,27,.33)), linear-gradient(0deg, rgba(7,42,27,.55), transparent 60%);
+  }
+}
